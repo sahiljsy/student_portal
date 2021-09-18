@@ -1,0 +1,50 @@
+.sidebar{
+    background-color: rgb(241, 143, 30); /*#f79e38; */
+    min-width :155px;
+    height: 100%; 
+    position: fixed; 
+    left:0;
+
+    
+}
+nav ul{
+    padding:0;
+}
+
+nav li{
+    list-style-type: none;
+    margin-left: 0px;
+    display: block;
+    left:0;
+}
+nav li:hover{
+    background-color: orangered;
+    height: 50px;
+}
+nav li a{
+    text-decoration: none;
+    margin-left: 2px;
+    font-size: 90%;
+    color: white;
+    text-align: center;
+    position: relative;
+    top: -12px;
+}
+
+.icon{
+    display:inline-block;
+    text-align: left;
+    border-right: 2px solid black;
+    font-size: 1.3rem;
+    color:black;
+    margin:4px;
+    padding: 5px;
+    min-width:20%;
+}
+
+@media screen and (max-width:990px) {
+    .sidebar{
+        display: none;
+    
+    }
+}
