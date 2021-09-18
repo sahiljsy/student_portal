@@ -16,7 +16,7 @@ const Header = () => {
             <div className={styles.bars}>
                 <FontAwesomeIcon icon={['fas', 'bars']} className={styles.bars_icon}/>
             </div>
-            <div className ={`${styles.dropdown_list} ${styles.nav_menu}`}>
+            <div className ={`${styles.dropdown_list} ${styles.nav_menu} ${styles.student}`}>
                 <ul className = {styles.no_list_style}>
                     <li>USERNAME</li><hr/>
                     <li><a href='/'>HOME</a></li><hr/>
@@ -24,7 +24,17 @@ const Header = () => {
                     <li><a href='#'>FEES</a></li><hr/>
                     <li><a href='/mysubject'>MY SUBJECTS</a></li><hr/>
                     <li><a href='#'>CONTACT US</a></li><hr/>
-                    <li><a href='#'>Logout</a></li>
+                    <li><a href='#'>LOGOUT</a></li>
+                </ul>
+            </div>
+            <div className ={`${styles.dropdown_list} ${styles.nav_menu} ${styles.admin}`}>
+                <ul className = {styles.no_list_style}>
+                    <li>USERNAME</li><hr/>
+                    <li><a href='/'>HOME</a></li><hr/>
+                    <li><a href='/result'>ADD FACULTY</a></li><hr/>
+                    <li><a href='#'>SUBJECT</a></li><hr/>
+                    <li><a href='/mysubject'>ADD NOTICE</a></li><hr/>
+                    <li><a href='#'>LOGOUT</a></li>
                 </ul>
             </div>
 
