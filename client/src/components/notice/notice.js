@@ -14,7 +14,7 @@ export class Notice extends Component {
             <div id="notice-container" className={styles.notice_container}>
                     <div className={styles.notice_card}>
                         <div className={`${styles.add_notice} ${styles.text_center}`}>
-                            <a href="result.html">
+                            <a href="/noticeform">
                             <FontAwesomeIcon icon={['fas', 'plus']} className={styles.add_notice} />
                             </a>
                         </div>

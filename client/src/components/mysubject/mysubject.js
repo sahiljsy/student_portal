@@ -23,7 +23,7 @@ export default class Mysubject extends Component {
         <div className={styles.subject_container}>
           <div className={styles.card}>
             <div className={`${styles.add_subject} ${styles.text_center}`}>
-              <a href="#">
+              <a href="/mysubject/classform">
                 <FontAwesomeIcon
                   icon={["fas", "plus"]}
                   className={styles.add_subject}

@@ -1,0 +1,39 @@
+.image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button{
+    margin-bottom: 4%;
+    margin-top: 4%;
+}
+
+.pic{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    height: 25%;
+    padding: 2%;
+}
+
+.message{
+    text-align: center;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: bolder;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 40px;
+    color: red;
+    text-shadow: 2px 2px 5px rgb(77, 71, 71);
+}
+
+.info{
+    text-align: center;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: bolder;
+    transform: scaleY(1.2);
+    font-size: 25px;
+    font-variant: small-caps;
+}

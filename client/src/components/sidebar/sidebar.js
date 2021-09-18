@@ -11,7 +11,7 @@ export class Sidebar extends Component {
   render() {
     return (
       <div className={styles.sidebar}>
-        <nav id = "student" className={styles.student}>
+        <nav id="student" className={styles.student}>
           <ul>
             <li>
               <FontAwesomeIcon icon={["fas", "home"]} className={styles.icon} />
@@ -54,8 +54,11 @@ export class Sidebar extends Component {
             </li>
             <hr />
             <li>
-              <FontAwesomeIcon icon={["fas", "user-plus"]} className={styles.icon} />
-              <a href="/result">ADD FACULTY</a>
+              <FontAwesomeIcon
+                icon={["fas", "user-plus"]}
+                className={styles.icon}
+              />
+              <a href="/result">ADD USER</a>
             </li>
             <hr />
             <li>
@@ -64,10 +67,7 @@ export class Sidebar extends Component {
             </li>
             <hr />
             <li>
-              <FontAwesomeIcon
-                icon={["fas", "file"]}
-                className={styles.icon}
-              />
+              <FontAwesomeIcon icon={["fas", "file"]} className={styles.icon} />
               <a href="#">ADD NOTICE</a>
             </li>
             <hr />
@@ -85,5 +85,6 @@ export class Sidebar extends Component {
     );
   }
 }
+
 
 export default withRouter(Sidebar);

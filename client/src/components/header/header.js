@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <div id="header" className={styles.header}>
       <img src={Logo} id="logo" className={styles.logo}/>
-      <sapn id="tag" className={styles.tag}>USERNAME</sapn> 
+      <a href="/userdetails" style={{color: "white"}}><sapn id="tag" className={styles.tag}>USERNAME</sapn> </a>
         <div className={styles.dropdown_menu}>
             <div className={styles.bars}>
                 <FontAwesomeIcon icon={['fas', 'bars']} className={styles.bars_icon}/>
