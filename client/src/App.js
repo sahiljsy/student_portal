@@ -15,6 +15,7 @@ import Subject from "./components/subject/subject";
 import Assignment from "./components/Assignment/assignment";
 import Classform from "./components/classform/classform";
 import Addresult from "./components/addresult/addresult";
+import Joinclass from "./components/joinclass/joinclass";
 
 const App = () => {
   const [user, setLoginUser] = useState({});
@@ -64,7 +65,10 @@ const App = () => {
           </Route> 
           <Route path="/addresult">
             <Addresult />
-          </Route> 
+          </Route>
+          <Route path="/mysubject/joinclass">
+            <Joinclass/>
+          </Route>
         </Switch>
       </Router>
     </div>

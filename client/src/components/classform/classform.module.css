@@ -102,3 +102,15 @@ input[type=button] {
 input[type=button]:hover {
 background-color: #8d0808;
 }
+
+.credit{
+  margin-left: 2%;
+}
+
+@media screen and (max-width:990px) {
+
+  .main_content{
+      margin:10px;
+      width:100%;
+  }
+}

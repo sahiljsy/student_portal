@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
-import styles from "./classform.module.css";
+import styles from "./joinclass.module.css";
 import Sidebar from "../sidebar/sidebar";
 
 class noticeform extends Component {
@@ -14,27 +14,18 @@ class noticeform extends Component {
                     <form>
                         <div className={styles.row}>
                             <div className={styles.col1}>
-                                <label>Title: </label>
+                                <label>Class code: </label>
                             </div>
                             <div className={styles.col2}>
-                                <input type="text" id="classtitle" placeholder="Title" />
+                                <input type="text" id="classcode" placeholder="Enter class code here" />
                             </div>
                         </div>
                         <div className={styles.row}>
-                            <div className={styles.col1}>
-                                <label>Credits:  </label>
-                            </div>
-                            <div className={styles.col2}>
-                                <input type="number" name="credits" value="credits" className={styles.credit}/>
-                            </div>
-                        </div>
-                        <div className={styles.row}>
-                            <input type="submit" value="Submit" style={{ float: "left" }} />
-                            <input type="button" value="Cancel" />
+                            <input type="submit" value="Join class"  style={{float: "left"}}/>
+                            <input type="button" value="Back" />
                         </div>
                     </form>
                 </div>
-
             </div>
         )
     }

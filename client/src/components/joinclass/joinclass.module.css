@@ -102,7 +102,6 @@ input[type=button] {
 input[type=button]:hover {
 background-color: #8d0808;
 }
-
 @media screen and (max-width:990px) {
 
   .main_content{
