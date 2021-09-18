@@ -45,12 +45,29 @@
     display: block;
     margin-bottom: 5px;
 }
-.form_element input[type=text], input[type="number"], input[type="email"],input[type="password"] {
+.form_element input[type=text] {
     padding: 5px;
     border:2px solid rgb(214, 213, 213) ;
     border-radius: 5px;
     box-sizing: border-box;
-
+}
+.form_element input[type=password]{
+    padding: 5px;
+    border:2px solid rgb(214, 213, 213) ;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.form_element input[type=email]{
+    padding: 5px;
+    border:2px solid rgb(214, 213, 213) ;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.form_element input[type=number]{
+    padding: 5px;
+    border:2px solid rgb(214, 213, 213) ;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 input:hover{
     box-shadow:2px 2px lightskyblue;

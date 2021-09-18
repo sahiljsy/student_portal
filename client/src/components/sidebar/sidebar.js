@@ -50,7 +50,7 @@ export class Sidebar extends Component {
           <ul>
             <li>
               <FontAwesomeIcon icon={["fas", "home"]} className={styles.icon} />
-              <a href="/">HOME</a>
+              <a href="/admin">HOME</a>
             </li>
             <hr />
             <li>
@@ -58,17 +58,17 @@ export class Sidebar extends Component {
                 icon={["fas", "user-plus"]}
                 className={styles.icon}
               />
-              <a href="/result">ADD USER</a>
+              <a href="/admin/register">ADD USER</a>
             </li>
             <hr />
             <li>
               <FontAwesomeIcon icon={["fas", "book"]} className={styles.icon} />
-              <a href="/mysubject">SUBJECTS</a>
+              <a href="/admin/subject">SUBJECTS</a>
             </li>
             <hr />
             <li>
               <FontAwesomeIcon icon={["fas", "file"]} className={styles.icon} />
-              <a href="#">ADD NOTICE</a>
+              <a href="/noticeform">ADD NOTICE</a>
             </li>
             <hr />
             <li>

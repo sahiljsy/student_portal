@@ -15,6 +15,8 @@ import Subject from "./components/subject/subject";
 import Assignment from "./components/Assignment/assignment";
 import Classform from "./components/classform/classform";
 import Addresult from "./components/addresult/addresult";
+import AdminHome from "./components/Home/adminHome";
+import AdminReg from "./components/register/adminReg";
 
 const App = () => {
   const [user, setLoginUser] = useState({});
@@ -23,24 +25,34 @@ const App = () => {
       <Header />
       <Router>
         <Switch>
+          <Route exact path="/">
+            <Home setLoginUser={setLoginUser} user={user} />
+          </Route>
+          <Route exact path="/admin">
+            <AdminHome />
+          </Route>
+          <Route path="/admin/register">
+            <AdminReg />
+          </Route>
+          <Route path="/admin/subject">
+            <Mysubject />
+          </Route>
           <Route path="/userdetails">
             <Userdetails />
           </Route>
           <Route path="/mysubject/addassignment">
-            <Addassignment/>
+            <Addassignment />
           </Route>
           <Route path="/noticeform">
-            <Noticeform/>
+            <Noticeform />
           </Route>
           <Route path="/accessdenied">
-            <Accessdenied/>
+            <Accessdenied />
           </Route>
           <Route path="/pagenotfound">
-            <Pagenotfound/>
+            <Pagenotfound />
           </Route>
-          <Route exact path="/">
-            <Home setLoginUser={setLoginUser} user={user} />
-          </Route>
+
           <Route path="/login">
             <Login setLoginUser={setLoginUser} />
           </Route>
@@ -49,22 +61,22 @@ const App = () => {
           </Route>
           <Route path="/result">
             <Result />
-          </Route> 
+          </Route>
           <Route exact path="/mysubject">
             <Mysubject />
-          </Route> 
+          </Route>
           <Route path="/mysubject/classform">
-            <Classform/>
+            <Classform />
           </Route>
           <Route path="/mysubject/subject">
             <Subject />
           </Route>
           <Route path="/mysubject/assignment">
             <Assignment />
-          </Route> 
+          </Route>
           <Route path="/addresult">
             <Addresult />
-          </Route> 
+          </Route>
         </Switch>
       </Router>
     </div>
