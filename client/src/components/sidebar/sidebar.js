@@ -41,7 +41,7 @@ export class Sidebar extends Component {
                 icon={["fas", "sign-out-alt"]}
                 className={styles.icon}
               />
-              <a href="#">LOG OUT</a>
+              <a href="/login" onClick={()=> {localStorage.clear()}}>LOG OUT</a>
             </li>
             <hr />
           </ul>
@@ -76,7 +76,7 @@ export class Sidebar extends Component {
                 icon={["fas", "sign-out-alt"]}
                 className={styles.icon}
               />
-              <a href="#">LOG OUT</a>
+              <a href="/login" onClick={()=> {localStorage.clear()}}>LOG OUT</a>
             </li>
             <hr />
           </ul>

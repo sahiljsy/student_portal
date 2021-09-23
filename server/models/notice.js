@@ -10,12 +10,13 @@ const noticeSchema = new Mongoose.Schema(
       type: String,
       required: true,
     },
-    user: {
+    userid: {
       type: Mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required:true
     },
     attchment:{
-        type:File
+        type:String
     }
   },
   {

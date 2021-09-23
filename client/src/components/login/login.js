@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import styles from "./login.module.css";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: "",
       password: "",
@@ -15,7 +18,7 @@ class Login extends Component {
 
   handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(e.target.name);
+    // console.log(e.target.name);
     this.setState({
       ...this.state,
       [name]: value,
@@ -26,21 +29,46 @@ class Login extends Component {
     const { history, setLoginUser } = this.props;
     e.preventDefault();
     const { email, password } = this.state;
-    console.log(this.state);
     if (email && password) {
-      axios
-        .post("http://localhost:5000/user/signin", this.state)
-        .then((res) => {
-          alert(res.data.message);
-          setLoginUser(res.data.user);
+      axios({
+        method: "POST",
+        data: this.state,
+        withCredentials: true,
+        url: "user/signin",
+      }).then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error, {
+            position: "top-center",
+            theme: "colored",
+          });
+        } else {
+          console.log("haa" + res.data.accessToken);
+          localStorage.setItem("accessToken", res.data.accessToken);
+          toast.success(res.data.success, {
+            position: "top-center",
+            theme: "colored",
+          });
           history.push("/");
-        });
+        }
+      });
     } else {
-      alert("invalid input");
+      toast.error("invalid input", {
+        position: "top-center",
+        theme: "colored",
+      });
+      // <ToastContainer
+      //   autoClose={2000}
+      //   position="top-center"
+      //   className="toast-container"
+      //   toastClassName="dark-toast"
+      // />
     }
   };
 
   render() {
+    if (localStorage.getItem("accessToken")) {
+      return <Redirect to={"/"} />;
+    }
     const { history } = this.props;
     return (
       <div className={styles.form_container}>
@@ -55,7 +83,8 @@ class Login extends Component {
             className={styles.margin_50}
             placeholder="abc@gmail.com"
             value={this.state.email}
-            onChange={this.handleChange} style={{width:"80%"}}
+            onChange={this.handleChange}
+            style={{ width: "80%" }}
           />
           <span className="error"></span>
           <label htmlFor="password" className={styles.label}>
@@ -67,7 +96,7 @@ class Login extends Component {
             id="password"
             onChange={this.handleChange}
             value={this.state.password}
-            style={{width:"80%"}}
+            style={{ width: "80%" }}
           />
           <span className="error"></span>
           <br />

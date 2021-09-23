@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { Sidebar } from "../sidebar/sidebar";
 import styles from "./adminreg.module.css";
+import { Redirect } from "react-router";
 
 export default class AdminReg extends Component {
   render() {
+    if(localStorage.getItem("accessToken")){
+      return <Redirect to={'/admin'}/>
+    }
     return (
       <div className={styles.main_content}>
         <Sidebar />

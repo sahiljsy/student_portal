@@ -10,6 +10,12 @@ export default class Subject extends Component {
   render() {
     return (
       <div id="subject-container" className={styles.subject_container}>
+        
+        <div className={styles.class_header}>
+          <p className={styles.class_header_title}>CE_V_Sem_AT</p>
+          <p>credit:5</p>
+          <p>Class Code:</p>
+        </div>
         <div className={styles.class_nav}>
           <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
             <li>
@@ -22,11 +28,6 @@ export default class Subject extends Component {
               <a href="#">People</a>
             </li>
           </ul>
-        </div>
-        <div className={styles.class_header}>
-          <p className={styles.class_header_title}>CE_V_Sem_AT</p>
-          <p>credit:5</p>
-          <p>Class Code:</p>
         </div>
         <div className={styles.card}>
           <FontAwesomeIcon
