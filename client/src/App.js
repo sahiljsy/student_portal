@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/header/header";
 import Userdetails from "./components/userdetails/userdetails";
 import Addassignment from "./components/addassignment/addassignment";
@@ -15,60 +15,92 @@ import Subject from "./components/subject/subject";
 import Assignment from "./components/Assignment/assignment";
 import Classform from "./components/classform/classform";
 import Addresult from "./components/addresult/addresult";
+import AdminHome from "./components/Home/adminHome";
+import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
+import axios from "axios";
+import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 
 const App = () => {
-  const [user, setLoginUser] = useState({});
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    let isAuthnticated = localStorage.getItem("accessToken");
+    if (isAuthnticated) {
+      axios
+        .get("/user/info", {
+          headers: {
+            accessToken: isAuthnticated,
+          },
+        })
+        .then((res) => {
+          if (res.data.error) {
+            console.log(res.data.error);
+          } else {
+            setUser(res.data.user);
+          }
+        });
+    }
+  },[]);
+
   return (
     <div>
-      <Header />
+      <Header user={{user}} />
       <Router>
         <Switch>
-          <Route path="/userdetails">
-            <Userdetails />
-          </Route>
-          <Route path="/mysubject/addassignment">
-            <Addassignment/>
-          </Route>
-          <Route path="/noticeform">
-            <Noticeform/>
+          <Route path="/admin/register">
+            <AdminReg />
           </Route>
           <Route path="/accessdenied">
-            <Accessdenied/>
+            <Accessdenied />
           </Route>
           <Route path="/pagenotfound">
-            <Pagenotfound/>
-          </Route>
-          <Route exact path="/">
-            <Home setLoginUser={setLoginUser} user={user} />
+            <Pagenotfound />
           </Route>
           <Route path="/login">
-            <Login setLoginUser={setLoginUser} />
+            <Login />
           </Route>
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/result">
-            <Result />
-          </Route> 
-          <Route exact path="/mysubject">
-            <Mysubject />
-          </Route> 
-          <Route path="/mysubject/classform">
-            <Classform/>
-          </Route>
-          <Route path="/mysubject/subject">
-            <Subject />
-          </Route>
-          <Route path="/mysubject/assignment">
-            <Assignment />
-          </Route> 
-          <Route path="/addresult">
-            <Addresult />
-          </Route>
-          <Route path="/mysubject/joinclass">
-            <Joinclass/>
-          </Route>
+          <ProtectedRoute exact path="/" component={() => <Home user ={user}/>} />
+          <ProtectedRoute exact path="/admin" component={() => <AdminHome />} />
+          <ProtectedRoute
+            path="/admin/subject"
+            component={() => <Mysubject />}
+          />
+          <ProtectedRoute
+            path="/userdetails"
+            component={() => <Userdetails user={user}/>}
+          />
+          <ProtectedRoute
+            path="/mysubject/addassignment"
+            component={() => <Addassignment />}
+          />
+          <ProtectedRoute path="/noticeform" component={() => <Noticeform user={user}/>} />
+          <ProtectedRoute path="/result" component={() => <Result />} />
+          <ProtectedRoute
+            exact
+            path="/mysubject"
+            component={() => <Mysubject />}
+          />
+          <ProtectedRoute
+            path="/mysubject/classform"
+            component={() => <Classform  user={user}/>}
+          />
+          <ProtectedRoute
+            path="/mysubject/subject"
+            component={() => <Subject />}
+          />
+          <ProtectedRoute
+            path="/mysubject/assignment"
+            component={() => <Assignment />}
+          />
+          <ProtectedRoute path="/addresult" component={() => <Addresult />} />
+          <ProtectedRoute
+            path="/mysubject/joinclass"
+            component={() => <Joinclass user={user}/>}
+          />
+          <Route path="*"><Pagenotfound /></Route>
         </Switch>
       </Router>
     </div>

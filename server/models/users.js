@@ -22,6 +22,11 @@ const userSchema = new Mongoose.Schema({
         type:Number,
         required:true
     },
+    role:{
+        type:String,
+        default: 'student',
+        required:true
+    }
 
 },{
     timestamps: true
