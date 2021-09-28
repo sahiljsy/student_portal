@@ -19,10 +19,10 @@ export default class Subject extends Component {
         <div className={styles.class_nav}>
           <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
             <li>
-              <a href="#">Add Assignment</a>
+              <a href="/mysubject/addassignment?type=assignment">Add Assignment</a>
             </li>
             <li>
-              <a href="#">Add Material</a>
+              <a href="/mysubject/addassignment?type=material">Add Material</a>
             </li>
             <li>
               <a href="#">People</a>

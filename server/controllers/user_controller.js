@@ -8,7 +8,7 @@ export const create = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
-      const { username, name, password, contact_no, email } = req.body;
+      const { username, name, password, contact_no, email,role } = req.body;
       bcrypt.hash(password, 10).then((hash) => {
         User.create({
           name: name,
@@ -16,6 +16,7 @@ export const create = async (req, res) => {
           password: hash,
           contact_no: contact_no,
           email: email,
+          role: role
         });
         return res.send({ success: "User has Registerd now Login!!" });
       });
@@ -25,6 +26,35 @@ export const create = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     return res.send({ error: "Error in user creation" });
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    let user = await User.findOne({ username: req.body.username });
+    console.log(req.body.username)
+    if (user) {
+      console.log(user)
+      // console.log(contact_no);
+      console.log(req.body.contact_no)
+      console.log(req.body.name)
+      console.log(req.body.email)
+      console.log(req.body.role)
+      
+      var data = {
+        name: req.body.name,
+        contact_no: req.body.contact_no,
+        email: req.body.email,
+      };
+      const result = await User.updateOne({ username : req.body.username },{$set: data} );
+      console.log(result);
+      return res.send({ success: "User updated!!" });
+    } else {
+      return res.send({ error: "User not found" });
+    }
+  } catch (error) {
+    console.log(error.message);
+    return res.send({ error: "Error in user updation." });
   }
 };
 
@@ -44,8 +74,8 @@ export const signin = async (req, res) => {
         { username: user.username, id: user.id },
         "sahil"
       );
-      
-      return res.send({ accessToken: accessToken , success:"Logged in Successfully!"});
+
+      return res.send({ accessToken: accessToken, success: "Logged in Successfully!" });
     });
   } catch (error) {
     console.log(error.message);
@@ -69,9 +99,9 @@ export const info = async (req, res) => {
         name: user.name,
         email: user.email,
       };
-      return res.send({user: userInfo });
-      
-    }else{
+      return res.send({ user: userInfo });
+
+    } else {
 
     }
   } catch (error) {

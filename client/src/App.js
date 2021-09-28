@@ -18,6 +18,8 @@ import Addresult from "./components/addresult/addresult";
 import AdminHome from "./components/Home/adminHome";
 import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
+import Edituserdetails from "./components/edituserdetails/edituserdetails";
+// import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
 
@@ -47,7 +49,7 @@ const App = () => {
       <Header user={{user}} />
       <Router>
         <Switch>
-          <Route path="/admin/register">
+        <Route path="/admin/register">
             <AdminReg />
           </Route>
           <Route path="/accessdenied">
@@ -73,8 +75,12 @@ const App = () => {
             component={() => <Userdetails user={user}/>}
           />
           <ProtectedRoute
+            path="/edituserdetails"
+            component={() => <Edituserdetails user={user}/>}
+          />
+          <ProtectedRoute
             path="/mysubject/addassignment"
-            component={() => <Addassignment />}
+            component={() => <Addassignment user={user} />}
           />
           <ProtectedRoute path="/noticeform" component={() => <Noticeform user={user}/>} />
           <ProtectedRoute path="/result" component={() => <Result />} />
@@ -87,6 +93,10 @@ const App = () => {
             path="/mysubject/classform"
             component={() => <Classform  user={user}/>}
           />
+          {/* <ProtectedRoute
+            path="/mysubject/editclass"
+            component={() => <Editclass  user={user}/>}
+          /> */}
           <ProtectedRoute
             path="/mysubject/subject"
             component={() => <Subject />}

@@ -93,14 +93,14 @@ input[type=button]:hover {
   
   .col_25 {
     float: left;
-    width: 22.5%;
+    width: 22%;
     margin-top: 10px;
     margin-left: 2%;
   }
   
   .col_75 {
     float: left;
-    width: 72.5%;
+    width: 72%;
     margin-top: 10px;
   }
   

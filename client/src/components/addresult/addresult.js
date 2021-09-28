@@ -3,7 +3,7 @@ import styles from "./addresult.module.css";
 import { withRouter } from "react-router-dom";
 import { Sidebar } from "../sidebar/sidebar";
 
-export class Result extends Component {
+export class Addresult extends Component {
     render() {
         return (
             <div className={styles.main_content}>
@@ -76,4 +76,4 @@ export class Result extends Component {
     }
 }
 
-export default withRouter(Result);
+export default withRouter(Addresult);
