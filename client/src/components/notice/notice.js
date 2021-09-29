@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import styles from "./notice.module.css";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import moment from "moment";
 library.add(fas);
@@ -21,7 +20,7 @@ export class Notice extends Component {
 
   render() {
     const notice = this.props.notice;
-    console.log(notice);
+    // console.log(notice);
     return (
       <div className={styles.notice_card}>
         <div className={`${styles.notice_header} ${styles.text_center}`}>

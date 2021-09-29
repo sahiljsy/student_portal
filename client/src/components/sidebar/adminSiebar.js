@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(fas);
 
-export class Sidebar extends Component {
+export class AdminSidebar extends Component {
   constructor(props) {
     super(props)
   
@@ -96,4 +96,4 @@ export class Sidebar extends Component {
 }
 
 
-export default withRouter(Sidebar);
+export default withRouter(AdminSidebar);

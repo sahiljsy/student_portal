@@ -40,10 +40,9 @@ export default class Assignment extends Component {
               <div className={styles.submit_form}>
                 <form>
                   <input type="file" id="ans-file" />
-                  <button
-                    type="submit"
-                    className={styles.button}
-                  >Turn In</button>
+                  <button type="submit" className={styles.button}>
+                    Turn In
+                  </button>
                 </form>
               </div>
             </div>

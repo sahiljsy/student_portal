@@ -40,7 +40,7 @@ class Register extends Component {
       password &&
       email &&
       contact_no &&
-      password == repassword
+      password === repassword
     ) {
       axios({
         method: "POST",

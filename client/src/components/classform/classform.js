@@ -5,6 +5,7 @@ import styles from "./classform.module.css";
 import Sidebar from "../sidebar/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Accesssdenied from "../accessdenied/accessdenied";
 
 toast.configure();
 
@@ -74,6 +75,9 @@ class classform extends Component {
   };
 
   render() {
+    if(this.props.user.role ==="student"){
+      return <Accesssdenied />
+    }
     return (
       <div className={styles.main_content}>
         <Sidebar />

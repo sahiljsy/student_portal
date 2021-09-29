@@ -1,29 +1,54 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router";
 import { Sidebar } from "../sidebar/sidebar";
 import styles from "./mysubject.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import SubjectCard from './subjec_card'
 
 library.add(fas);
-
 export default class Mysubject extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-         
+      redirct: "",
+      subjects:[]
+    };
+  }
+  componentDidMount() {
+    try {
+      axios({
+        method: "post",
+        data: { userid: this.props.user.id },
+        url: "/user/getmysubject",
+      }).then((res) => {
+        if (res.data.error) {
+          console.log(res.data.error);
+        } else {
+          // console.log(res.data.mysubject);
+          this.setState({subjects:res.data.mysubject});
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
     }
-}
+    if (this.props.user.role === "student") {
+      this.setState({ redirct: "/mysubject/joinclass" });
+    } else {
+      this.setState({ redirct: "/mysubject/classform" });
+    }
+  }
   render() {
+    const subjects = this.state.subjects
     return (
       <div className={styles.main_content}>
         <Sidebar />
         <div className={styles.subject_container}>
           <div className={styles.card}>
             <div className={`${styles.add_subject} ${styles.text_center}`}>
-              <a href="/mysubject/classform">
+              <a href={this.state.redirct}>
                 <FontAwesomeIcon
                   icon={["fas", "plus"]}
                   className={styles.add_subject}
@@ -31,39 +56,13 @@ export default class Mysubject extends Component {
               </a>
             </div>
           </div>
-          <div className={styles.card}>
-            <div className={`${styles.card_header} ${styles.text_center}`}>
-            <a href="/mysubject/subject">B.tech CE SEM V SEPP</a>
-            </div>
-            <div className={styles.footer}>credit: 5</div>
-          </div>
-
-          <div className={styles.card}>
-            <div className={`${styles.card_header} ${styles.text_center}`}>
-            <a href="/mysubject/subject">B.tech CE SEM V SEPP</a>
-            </div>
-            <div className={styles.footer}>credit: 5</div>
-          </div>
-          <div className={styles.card}>
-            <div className={`${styles.card_header} ${styles.text_center}`}>
-              <a href="/mysubject/subject">B.tech CE SEM V SEPP</a>
-            </div>
-            <div className={styles.footer}>credit: 5</div>
-          </div>
-          <div className={styles.card}>
-            <div className={`${styles.card_header} ${styles.text_center}`}>
-              <a href="/mysubject/subject">B.tech CE SEM V SEPP</a>
-            </div>
-            <div className={styles.footer}>credit: 5</div>
-          </div>
-          <div className={styles.card}>
-            <div className={`${styles.card_header} ${styles.text_center}`}>
-              <a href="/mysubject/subject">B.tech CE SEM V SEPP</a>
-            </div>
-            <div className={styles.footer}>credit: 5</div>
-          </div>
+          {subjects.map((s) => (
+            <SubjectCard  subject={s} key={s._id}/>
+          ))}
+          
         </div>
       </div>
     );
   }
 }
+

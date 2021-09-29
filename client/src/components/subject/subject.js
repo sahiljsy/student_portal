@@ -7,7 +7,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 library.add(fas);
 
 export default class Subject extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       subject_id:""
+    }
+  }
+  
+  componentDidMount(){
+    if(this.props.user.role === "student"){
+      let class_nav = document.getElementById("class_nav");
+      class_nav.remove();
+    }
+  }
   render() {
+    // console.log(location);
     return (
       <div id="subject-container" className={styles.subject_container}>
         
@@ -16,7 +31,7 @@ export default class Subject extends Component {
           <p>credit:5</p>
           <p>Class Code:</p>
         </div>
-        <div className={styles.class_nav}>
+        <div id="class_nav" className={styles.class_nav}>
           <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
             <li>
               <a href="#">Add Assignment</a>

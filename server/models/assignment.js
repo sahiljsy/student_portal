@@ -23,6 +23,9 @@ const assignmentSchema = new Mongoose.Schema(
         type: Number,
         default: 100
     },
+    submissions:[{
+      type:String
+    }]
 
   },
   {

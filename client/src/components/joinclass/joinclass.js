@@ -32,7 +32,7 @@ class noticeform extends Component {
       if (this.state.userid) {
         if (this.state.classCode) {
           const len = this.state.classCode.length;
-          if (len == 7) {
+          if (len === 7) {
             axios({
               method: "post",
               data: this.state,

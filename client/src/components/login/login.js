@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { locales } from "moment";
 toast.configure();
 
 class Login extends Component {
@@ -26,7 +27,7 @@ class Login extends Component {
   };
 
   login = (e) => {
-    const { history, setLoginUser } = this.props;
+    const { history } = this.props;
     e.preventDefault();
     const { email, password } = this.state;
     if (email && password) {
@@ -42,13 +43,17 @@ class Login extends Component {
             theme: "colored",
           });
         } else {
-          console.log("haa" + res.data.accessToken);
+          console.log(res.data);
           localStorage.setItem("accessToken", res.data.accessToken);
           toast.success(res.data.success, {
             position: "top-center",
             theme: "colored",
           });
-          history.push("/");
+          if (res.data.role === "admin") {
+            history.push("/admin");
+          } else {
+            history.push("/");
+          }
         }
       });
     } else {
@@ -56,12 +61,6 @@ class Login extends Component {
         position: "top-center",
         theme: "colored",
       });
-      // <ToastContainer
-      //   autoClose={2000}
-      //   position="top-center"
-      //   className="toast-container"
-      //   toastClassName="dark-toast"
-      // />
     }
   };
 

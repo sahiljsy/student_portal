@@ -1,143 +1,152 @@
-.assignment{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding:15px 0px 20px 55px;
+.assignment {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 15px 0px 20px 55px;
 }
-.assignment_logo{
-    font-size: x-large;
-    color:white;
-    padding: 15px;
-    background-color: orange;
-    border-radius: 60%;
-    max-height: 25px;
-}
-
-.details{
-    max-height: 500px;
-    min-width: 55%;
-    padding-left:10px;
-}
-.assignment_info{
-    border-bottom: 1px solid orange;
-    padding-bottom: 20px;
+.assignment_logo {
+  font-size: x-large;
+  color: white;
+  padding: 15px;
+  background-color: orange;
+  border-radius: 60%;
+  max-height: 25px;
 }
 
-.assignment_title{
-    display: block;
-    font-size: 35px;
-    position: relative;
-    top:10px;
-    color: rgb(109, 47, 6);
-    margin: 0px;
+.details {
+  max-height: 500px;
+  min-width: 55%;
+  padding-left: 10px;
+}
+.assignment_info {
+  border-bottom: 1px solid orange;
+  padding-bottom: 20px;
 }
 
-.points{
-    display: inline-block;
-    margin:0px;
-    font-size: medium;
-}
-.due_to{
-    float:right;
-    margin:0px;
-}
-.assignment_attachment{
-    box-sizing: border-box;
-    border:2px solid lightgray;
-    display: flex;
-    max-width: 300px;
-    margin-top: 30px;
-    border-radius: 10px;
-    height: 70px;
-    max-height: 70px;
-    margin-bottom: 30px;
+.assignment_title {
+  display: block;
+  font-size: 35px;
+  position: relative;
+  top: 10px;
+  color: rgb(109, 47, 6);
+  margin: 0px;
 }
 
-.front_page{
-    width:70px;
-    display: inline-block;
-    border-right: 2px solid lightgray;
+.points {
+  display: inline-block;
+  margin: 0px;
+  font-size: medium;
 }
-.file_title{
-    display: inline-block;
-    margin: 10px;
+.due_to {
+  float: right;
+  margin: 0px;
 }
-a{
-    text-decoration: none;
-    font-size: larger;
-}
-.file_title >p {
-    margin-top:5px;
-    text-transform: uppercase;
-    color:rgb(109, 108, 108);
-}
-.assignment_submit{
-    box-sizing: border-box;
-    float:right;
-    width:350px;
-    padding:20px 5px 20px 50px;
+.assignment_attachment {
+  box-sizing: border-box;
+  border: 2px solid lightgray;
+  display: flex;
+  max-width: 300px;
+  margin-top: 30px;
+  border-radius: 10px;
+  height: 70px;
+  max-height: 70px;
+  margin-bottom: 30px;
 }
 
-.submit{
-    margin:auto;
-    border-radius: 20px;
-    box-shadow: 0 0 5px black, 0 0 5px white;
-    padding:25px 10px;
+.front_page {
+  width: 70px;
+  display: inline-block;
+  border-right: 2px solid lightgray;
+}
+.file_title {
+  display: inline-block;
+  margin: 10px;
+}
+a {
+  text-decoration: none;
+  font-size: larger;
+}
+.file_title > p {
+  margin-top: 5px;
+  text-transform: uppercase;
+  color: rgb(109, 108, 108);
+}
+.assignment_submit {
+  box-sizing: border-box;
+  float: right;
+  width: 350px;
+  padding: 20px 5px 20px 50px;
 }
 
-.submit_title{
-    display: inline-block;
-    font-size: large;
-    font-weight: bolder;
-    
-}
-.submit_status{
-    float:right;
-    font-size: larger;
-}
-.submit_form{
-    text-align: center;
-}
-input[type="file"]{
-    padding: 5px;
-    margin-top: 10px;
-    border:2px solid rgb(214, 213, 213) ;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-top:15px;
-    width:90%;
-    max-width: 90%;
-    font-size: larger;
-}
-.ans_file{
-    border-radius: 10px;
-    height: 70px;
-}
-.bars{
-    display: block;
-}
-.button{
-    padding: 5px;
-    margin-top: 10px;
-    border:2px solid rgb(214, 213, 213) ;
-    border-radius: 5px;
-    box-sizing: border-box;
-    margin-top:15px;
-    width:90%;
-    max-width: 90%;
-    font-size: larger;
-
+.submit {
+  margin: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 5px black, 0 0 5px white;
+  padding: 25px 10px;
 }
 
-@media screen and (max-width:990px){
-
-    .details{
-        min-width:80%;
-    }
-    .assignment_logo{
-        display:none;
-    }
-    .assignment_submit{
-        padding-left: 20px;
-    }
+.submit_title {
+  display: inline-block;
+  font-size: large;
+  font-weight: bolder;
 }
+.submit_status {
+  float: right;
+  font-size: larger;
+}
+.submit_form {
+  text-align: center;
+}
+input[type="file"] {
+  padding: 5px;
+  border: 2px solid rgb(214, 213, 213);
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  width: 90%;
+  max-width: 90%;
+  font-size: larger;
+}
+input[type=file]::file-selector-button {
+    border: 2px solid #6c5ce7;
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: #a29bfe;
+    transition: 1s;
+  }
+  
+  input[type=file]::file-selector-button:hover {
+    background-color: #81ecec;
+    border: 2px solid #00cec9;
+  }
+.ans_file {
+  border-radius: 10px;
+  height: 70px;
+}
+.bars {
+  display: block;
+}
+.button {
+  padding: 5px;
+  margin-top: 10px;
+  border: 2px solid rgb(214, 213, 213);
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-top: 15px;
+  width: 90%;
+  max-width: 90%;
+  font-size: larger;
+}
+
+@media screen and (max-width: 990px) {
+  .details {
+    min-width: 80%;
+  }
+  .assignment_logo {
+    display: none;
+  }
+  .assignment_submit {
+    padding-left: 20px;
+  }
+}
+

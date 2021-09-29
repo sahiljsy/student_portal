@@ -27,11 +27,11 @@ export class Header extends Component {
     const { user } = this.props.user;
     return (
       <div id="header" className={styles.header}>
-        <img src={Logo} id="logo" className={styles.logo} />
+        <img src={Logo} alt="" id="logo" className={styles.logo} />
         <a href="/userdetails" style={{ color: "white" }}>
-          <sapn id="tag" className={styles.tag}>
+          <p id="tag" className={styles.tag}>
             {user.username}
-          </sapn>{" "}
+          </p>{" "}
         </a>
         <div className={styles.dropdown_menu}>
           <div className={styles.bars}>
