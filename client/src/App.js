@@ -19,6 +19,7 @@ import AdminHome from "./components/Home/adminHome";
 import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
 import Edituserdetails from "./components/edituserdetails/edituserdetails";
+import ViewPeople from "./components/viewpeople/viewpeople";
 // import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
@@ -109,6 +110,10 @@ const App = () => {
           <ProtectedRoute
             path="/mysubject/joinclass"
             component={() => <Joinclass user={user}/>}
+          />
+          <ProtectedRoute
+            path="/mysubject/viewpeople"
+            component={() => <ViewPeople user={user}/>}
           />
           <Route path="*"><Pagenotfound /></Route>
         </Switch>

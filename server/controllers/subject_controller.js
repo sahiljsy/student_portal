@@ -83,3 +83,16 @@ export const addStudent = async (req, res) => {
     return res.send({ error: "Error in class Joining!!" });
   }
 };
+
+export const getAll = async (req, res) =>{
+  try {
+    //let people = await Subject.find({}).sort('-createdAt').populate("userid");
+    let people = await Subject.find({ classCode: "NA0WPMe" },{students});
+    
+    console.log(people)
+    res.send({people:people});
+    
+  } catch (error) {
+    res.send({error:"Unable to fetch notices"})
+  }
+}

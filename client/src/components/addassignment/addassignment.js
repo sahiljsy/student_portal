@@ -19,7 +19,7 @@ class addassignment extends Component {
             attchment: null,
             dueDate: null,
             points: 0,
-            isFile: true
+            //isFile: true
         }
     }
 

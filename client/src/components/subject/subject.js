@@ -25,7 +25,7 @@ export default class Subject extends Component {
               <a href="/mysubject/addassignment?type=material">Add Material</a>
             </li>
             <li>
-              <a href="#">People</a>
+              <a href="/mysubject/viewpeople">People</a>
             </li>
           </ul>
         </div>
