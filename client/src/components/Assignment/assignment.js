@@ -21,7 +21,6 @@ class Assignment extends Component {
       progress: 0,
       filename: {},
       assignment:{},
-      
     };
   }
   handleChange = (e) => {
@@ -69,12 +68,11 @@ class Assignment extends Component {
         assignment_id: this.props.match.params.id,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.error) {
           console.log(res.data.error);
         } else {
           this.setState({assignment:res.data.assignment})
-          // console.log(res.data.assignment);
+          console.log(res.data.assignment);
         }
       });
     if (this.props.match.params.type == "material") {

@@ -11,41 +11,53 @@ import Header from "../header/header";
 class edituserdetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: this.props.user.email,
+      name: this.props.user.name,
+      username: this.props.user.username,
+      contact: this.props.user.contact,
+    };
   }
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({
       ...this.state,
       [name]: value,
-      username: "Aakarsh Inamdar",
     });
   };
 
   updatedetails = (e) => {
-    // console.log(this.state)
+    const { name, username, contact } = this.state;
     const { history } = this.props;
-    console.log(history);
+    // console.log(history);
     e.preventDefault();
     // console.log(this.state.userid)
     try {
-      axios({
-        method: "POST",
-        data: this.state,
-        url: "/user/update",
-      }).then((res) => {
-        if (res.data.error) {
-          toast.error(res.data.error, {
-            position: "top-center",
-            theme: "colored",
-          });
-        } else {
-          toast.success(res.data.success, {
-            position: "top-center",
-            theme: "colored",
-          });
-          history.push("/userdetails");
-        }
-      });
+      if (!name || !username || !contact) {
+        toast.error("All Fields must be provided.", {
+          position: "top-center",
+          theme: "colored",
+        });
+      } else {
+        axios({
+          method: "POST",
+          data: this.state,
+          url: "/user/update",
+        }).then((res) => {
+          if (res.data.error) {
+            toast.error(res.data.error, {
+              position: "top-center",
+              theme: "colored",
+            });
+          } else {
+            toast.success(res.data.success, {
+              position: "top-center",
+              theme: "colored",
+            });
+            history.push("/userdetails");
+          }
+        });
+      }
     } catch (error) {
       toast.error(error.message, {
         position: "top-center",
@@ -60,7 +72,6 @@ class edituserdetails extends Component {
         <Header user={this.props.user} />
         <div className={styles.main_content}>
           <Sidebar user={this.props.user} />
-
           <div className={styles.border_box}>
             <form>
               <div className={styles.row}>
@@ -72,7 +83,21 @@ class edituserdetails extends Component {
                     name="name"
                     type="text"
                     id="name"
-                    placeholder=" New correct name here"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </div>
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Username: </label>
+                </div>
+                <div className={styles.col2}>
+                  <input
+                    name="username"
+                    type="text"
+                    id="username"
+                    value={this.state.username}
                     onChange={this.handleChange}
                   />
                 </div>
@@ -83,35 +108,24 @@ class edituserdetails extends Component {
                 </div>
                 <div className={styles.col2}>
                   <input
-                    name="contact_no"
+                    name="contact"
                     type="number"
-                    id="contact_no"
-                    placeholder="Enter new contact number here"
+                    id="contact"
+                    value={this.state.contact}
                     onChange={this.handleChange}
                   />
                 </div>
               </div>
-              <div className={styles.row}>
-                <div className={styles.col1}>
-                  <label>Email: </label>
-                </div>
-                <div className={styles.col2}>
-                  <input
-                    name="email"
-                    type="email"
-                    id="email"
-                    placeholder="Enter new email address here"
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
+
               <div className={styles.row}>
                 <input
                   type="submit"
                   value="Submit"
                   onClick={this.updatedetails}
                 />
-                <input type="button" value="Cancel" />
+                <a href="/userdetails">
+                  <input type="button" value="Cancel" />
+                </a>
               </div>
             </form>
           </div>

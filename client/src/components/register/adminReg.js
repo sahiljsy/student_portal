@@ -3,8 +3,11 @@ import { Sidebar } from "../sidebar/sidebar";
 import styles from "./adminreg.module.css";
 import axios from "axios";
 import Header from "../header/header";
+import { withRouter } from 'react-router-dom';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
-export default class AdminReg extends Component {
+class AdminReg extends Component {
   constructor(props) {
     super(props);
 
@@ -29,15 +32,47 @@ export default class AdminReg extends Component {
   };
 
   register = () => {
-    const { name, username, password, repassword, email, contact_no } = this.state;
+    const { history } = this.props;
+    const { name, username, password, repassword, email, contact_no, role } = this.state;
     console.log(this.state);
-    if (name && username && password && email && contact_no && (password === repassword)) {
-      axios.post("http://localhost:5000/user/create", this.state)
-        .then(res => {
-          alert(res.data.message);
+    if (name && username && password && email && contact_no && password && repassword) {
+      if (password == repassword) {
+        if (role == "user" || role == "admin") {
+          axios.post("http://localhost:5000/user/create", this.state)
+            .then(res => {
+              if (res.data.error) {
+                toast.error(res.data.error, {
+                  position: "top-center",
+                  theme: "colored",
+                });
+              } else {
+                toast.success(res.data.success, {
+                  position: "top-center",
+                  theme: "colored",
+                });
+                history.push("/");
+              }
+
+            });
+        } else {
+          toast.error("Role must be either 'user' or 'admin'", {
+            position: "top-center",
+            theme: "colored",
+          });
+        }
+
+
+      } else {
+        toast.error("Password and Confirm Password didn't match.", {
+          position: "top-center",
+          theme: "colored",
         });
+      }
     } else {
-      alert('invalid input');
+      toast.error("All fields are required.", {
+        position: "top-center",
+        theme: "colored",
+      });
     }
   };
 
@@ -93,14 +128,14 @@ export default class AdminReg extends Component {
               <label>Contact No :</label>
             </div>
             <div className={styles.col2}>
-            <input
-            type="number"
-            id="m-no"
-            placeholder="1234567890"
-            name="contact_no"
-            value={this.state.contact_no}
-            onChange={this.handleChange}
-          />
+              <input
+                type="number"
+                id="m-no"
+                placeholder="1234567890"
+                name="contact_no"
+                value={this.state.contact_no}
+                onChange={this.handleChange}
+              />
             </div>
           </div>
           <div className={styles.row}>
@@ -108,12 +143,12 @@ export default class AdminReg extends Component {
               <label>Role :</label>
             </div>
             <div className={styles.col2}>
-              <input type="text" name="role" id="role" placeholder="Role Of User" value={this.state.role} onChange={this.handleChange}/>
+              <input type="text" name="role" id="role" placeholder="Role Of User" value={this.state.role} onChange={this.handleChange} />
             </div>
           </div>
           <div className={styles.row}>
             <input type="submit" value="Submit" style={{ float: "left" }} onClick={this.register} />
-            <input type="button" value="Cancel" />
+            <a href="/"><input type="button" value="Cancel" /></a>
           </div>
         </div>
       </div>
@@ -121,3 +156,5 @@ export default class AdminReg extends Component {
     );
   }
 }
+
+export default withRouter(AdminReg)

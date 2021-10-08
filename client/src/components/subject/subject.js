@@ -3,7 +3,6 @@ import styles from "./subject.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
-import queryString from "query-string";
 import axios from "axios";
 import { toast } from "react-toastify";
 import AssignmentCard from "./AssignmentCard";
@@ -50,7 +49,6 @@ export class Subject extends Component {
             theme: "colored",
           });
         } else {
-          console.log(res.data);
           this.setState({
             attachments: res.data.subject.attachments,
             subject: res.data.subject,
@@ -72,7 +70,6 @@ export class Subject extends Component {
   }
 
   render() {
-    console.log(this.state);
     const subject = this.state.subject;
     const attachments = this.state.attachments;
     return (

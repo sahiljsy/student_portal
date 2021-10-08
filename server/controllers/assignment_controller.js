@@ -34,6 +34,7 @@ export const create = async (req, res) => {
         points: req.body.points,
       };
     }
+    console.log(insobj);
     let asign = await Assignment.create(insobj);
     if (asign) {
       Subject.findByIdAndUpdate(req.body.subject_id, {
@@ -50,26 +51,32 @@ export const create = async (req, res) => {
         let subject = await Subject.findById(req.body.subject_id).populate(
           "students"
         );
-        emails = subject.students.map(function (s) {return s.email;}).toString();
-        if (emails) {
-          transporter.sendMail(
-            {
-              from: " Student Portal dummydevlop@gmail.com",
-              to: emails,
-              subject: `New ${asign.type}`,
-              html: `<h4>New ${asign.type} for ${subject.title} </h4>
+        if (subject) {
+          emails = subject.students
+            .map(function (s) {
+              return s.email;
+            })
+            .toString();
+          if (emails) {
+            transporter.sendMail(
+              {
+                from: " Student Portal dummydevlop@gmail.com",
+                to: emails,
+                subject: `New ${asign.type}`,
+                html: `<h4>New ${asign.type} for ${subject.title} </h4>
                       <h3> ${asign.title}</h3>
                       ${asign.description}`,
-            },
-            (err, info) => {
-              if (err) {
-                console.log("error in sending mail", err);
-                return;
-              } else {
-                // console.log(info)
+              },
+              (err, info) => {
+                if (err) {
+                  console.log("error in sending mail", err);
+                  return;
+                } else {
+                  // console.log(info)
+                }
               }
-            }
-          );
+            );
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -95,12 +102,15 @@ export const getAllAttachment = async (req, res) => {
     });
     if (subject) {
       let creator = await Subject.findById(subject_id).populate({
-        path:"creator"
-      })
-      if(creator){
-        return res.send({ subject: subject, creator: creator.creator.username });
-      }else{
-        return res.send({ subject: subject});
+        path: "creator",
+      });
+      if (creator) {
+        return res.send({
+          subject: subject,
+          creator: creator.creator.username,
+        });
+      } else {
+        return res.send({ subject: subject });
       }
     } else {
       return res.send({ error: "unable to find subject" });
