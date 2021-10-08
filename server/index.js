@@ -7,7 +7,7 @@ import db from './config/mongoose.js';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
-
+import path from 'path'
 const app = express();
 
 app.use(fileUpload());

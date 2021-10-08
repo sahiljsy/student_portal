@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-
+import LoginHeader from '../header/loginHeader'
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +40,7 @@ class Register extends Component {
       password &&
       email &&
       contact_no &&
-      password == repassword
+      password === repassword
     ) {
       axios({
         method: "POST",
@@ -75,6 +75,8 @@ class Register extends Component {
       return <Redirect to={"/"} />;
     }
     return (
+      <>
+      <LoginHeader />
       <div className={styles.form_container}>
         <h2>STUDENT INFORMATION</h2>
         <div className={styles.form_element}>
@@ -169,6 +171,7 @@ class Register extends Component {
           </button>
         </div>
       </div>
+      </>
     );
   }
 }
