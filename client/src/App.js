@@ -76,7 +76,7 @@ const App = () => {
           />
           <ProtectedRoute
             path="/edituserdetails"
-            component={() => <Edituserdetails user={user}/>}
+            component={() => <Edituserdetails user={user} setUser={setUser}/>}
           />
           <ProtectedRoute
             path="/mysubject/addassignment"

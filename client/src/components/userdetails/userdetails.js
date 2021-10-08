@@ -10,6 +10,7 @@ class userdetails extends Component {
     render() {
         const {user} = this.props
         console.log(user)
+
         return (
             <div className={styles.main_content}>
                 <Sidebar />
@@ -24,7 +25,6 @@ class userdetails extends Component {
                         <div className={styles.display_data}>FULL NAME: </div>{user.name} &nbsp; &nbsp; <hr className={styles.after_data} />
                         <div className={styles.display_data}>contact: </div> {user.contact} &nbsp; &nbsp; <hr className={styles.after_data} />
                         <div className={styles.display_data}>email-address: </div> {user.email}&nbsp; &nbsp; <hr className={styles.after_data} />
-                        <div className={styles.display_data}>Semester: </div> 05 &nbsp; &nbsp; <hr className={styles.after_data} />
                     </div>
                 </div>
             </div>

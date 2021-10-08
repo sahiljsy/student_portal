@@ -50,7 +50,9 @@ class edituserdetails extends Component {
                             theme: "colored",
                         });
                     } else {
+                        this.props.setUser(res.data.user)
                         toast.success(res.data.success, {
+                            
                             position: "top-center",
                             theme: "colored",
                         });
