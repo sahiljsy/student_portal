@@ -6,7 +6,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import SubjectCard from './subjec_card'
-
+import Header from '../header/header'
 library.add(fas);
 export default class Mysubject extends Component {
   constructor(props) {
@@ -43,8 +43,10 @@ export default class Mysubject extends Component {
   render() {
     const subjects = this.state.subjects
     return (
+      <>
+      <Header user={this.props.user} />
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={this.props.user}/>
         <div className={styles.subject_container}>
           <div className={styles.card}>
             <div className={`${styles.add_subject} ${styles.text_center}`}>
@@ -62,6 +64,7 @@ export default class Mysubject extends Component {
           
         </div>
       </div>
+      </>
     );
   }
 }

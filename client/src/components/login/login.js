@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Redirect } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { locales } from "moment";
+import LoginHeader from '../header/loginHeader'
 toast.configure();
 
 class Login extends Component {
@@ -14,6 +14,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      setUser: this.props.setuser
     };
   }
 
@@ -43,17 +44,15 @@ class Login extends Component {
             theme: "colored",
           });
         } else {
-          console.log(res.data);
+          this.props.setLogin(true);
+          this.state.setUser(res.data.user);
           localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("role", res.data.user.role);
           toast.success(res.data.success, {
             position: "top-center",
             theme: "colored",
           });
-          if (res.data.role === "admin") {
-            history.push("/admin");
-          } else {
             history.push("/");
-          }
         }
       });
     } else {
@@ -70,6 +69,8 @@ class Login extends Component {
     }
     const { history } = this.props;
     return (
+      <>
+      <LoginHeader />
       <div className={styles.form_container}>
         <form>
           <label htmlFor="email" className={styles.label}>
@@ -116,6 +117,7 @@ class Login extends Component {
           </button>
         </form>
       </div>
+      </>
     );
   }
 }

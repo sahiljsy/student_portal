@@ -4,11 +4,13 @@ import { withRouter } from "react-router-dom";
 import styles from "./pagenotfound.module.css";
 import notfound from "../../img/monster-brave.gif";
 import { Link } from "react-router-dom";
+import LoginHeader from '../header/loginHeader'
 
 class Pagenotfound extends Component {
     render() {
         return (
             <>
+            <LoginHeader />
                 <div className={styles.image}>
                     <img src={notfound} className={styles.pic} alt=""/>
                 </div>

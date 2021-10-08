@@ -4,10 +4,9 @@ import Logo from "../../img/logo.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
 
-toast.configure()
-
+toast.configure();
 library.add(fas);
 
 export class Header extends Component {
@@ -17,14 +16,27 @@ export class Header extends Component {
     this.state = {};
   }
 
-  handleLogout = () =>{
-    localStorage.removeItem('accessToken');
-    toast.success("You have Logged out!!", {position:'top-center', theme:'colored'})
-
+  componentDidMount() {
+    const user = this.props.user;
+    if (user.role === "student") {
+      let admin_sidebar = document.getElementById("admin_dropdown");
+      admin_sidebar.remove();
+    } else if(user.role === "admin"){
+      let student_sidebar = document.getElementById("student_dropdown");
+      student_sidebar.remove();
+    }
   }
 
+  handleLogout = () => {
+    localStorage.clear();
+    toast.success("You have Logged out!!", {
+      position: "top-center",
+      theme: "colored",
+    });
+  };
+
   render() {
-    const { user } = this.props.user;
+    const { user } = this.props;
     return (
       <div id="header" className={styles.header}>
         <img src={Logo} alt="" id="logo" className={styles.logo} />
@@ -41,10 +53,13 @@ export class Header extends Component {
             />
           </div>
           <div
-            className={`${styles.dropdown_list} ${styles.nav_menu} ${styles.student}`}
+            id="student_dropdown"
+            className={`${styles.dropdown_list} ${styles.nav_menu}`}
           >
             <ul className={styles.no_list_style}>
-              <li><a href="/userdetails">{user.username}</a></li>
+              <li>
+                <a href="/userdetails">{user.username}</a>
+              </li>
               <hr />
               <li>
                 <a href="/">HOME</a>
@@ -67,15 +82,20 @@ export class Header extends Component {
               </li>
               <hr />
               <li>
-                <a href="/" onClick={this.handleLogout}>LOGOUT</a>
+                <a href="/" onClick={this.handleLogout}>
+                  LOGOUT
+                </a>
               </li>
             </ul>
           </div>
           <div
-            className={`${styles.dropdown_list} ${styles.nav_menu} ${styles.admin}`}
+            id="admin_dropdown"
+            className={`${styles.dropdown_list} ${styles.nav_menu}`}
           >
             <ul className={styles.no_list_style}>
-              <li>{user.username}</li>
+              <li>
+                <a href="/userdetails">{user.username}</a>
+              </li>
               <hr />
               <li>
                 <a href="/admin">HOME</a>
@@ -94,7 +114,9 @@ export class Header extends Component {
               </li>
               <hr />
               <li>
-                <a href="/" onClick={this.handleLogout}>LOGOUT</a>
+                <a href="/" onClick={this.handleLogout}>
+                  LOGOUT
+                </a>
               </li>
             </ul>
           </div>

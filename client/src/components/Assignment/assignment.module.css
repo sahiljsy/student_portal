@@ -77,6 +77,15 @@ a {
   width: 350px;
   padding: 20px 5px 20px 50px;
 }
+.progessBar{
+  margin-top: 5px;
+  height: .8rem;
+  width: 0%;
+  background-color: rgb(6, 36, 138);
+  color: white;
+  padding:2px
+}
+
 
 .submit {
   margin: auto;
@@ -136,6 +145,9 @@ input[type=file]::file-selector-button {
   width: 90%;
   max-width: 90%;
   font-size: larger;
+}
+.button:hover{
+  background-color:green;
 }
 
 @media screen and (max-width: 990px) {

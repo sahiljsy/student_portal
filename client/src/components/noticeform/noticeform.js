@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Accesssdenied from "../accessdenied/accessdenied";
+import Header from '../header/header'
 
 class noticeform extends Component {
   constructor(props) {
@@ -73,12 +74,15 @@ class noticeform extends Component {
   };
 
   render() {
-    if (this.props.user.role === "student") {
+    const user = this.props.user;
+    if (user.role === "student") {
       return <Accesssdenied />;
     }
     return (
+      <>
+      <Header user={this.props.user} />
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={user}/>
 
         <div className={styles.border_box}>
           <form>
@@ -128,6 +132,7 @@ class noticeform extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }

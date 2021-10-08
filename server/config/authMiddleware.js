@@ -5,24 +5,15 @@ const { verify } = jwt;
 
 export const validateToken = async (req, res, next) => {
   try {
-    const token = req.cookies.studentportal;
-    console.log(token);
+    const token = req.header("token");
     const validToken = verify(token, "sahil");
-    const user = await User.findOne({ _id: validToken._id, "tokens.token": token });
-    // const accessToken = req.header("accessToken");
-    // if (!accessToken) {
-    //   return res.json({ error: "Please Login first" });
-    // }
-
-    // const validToken = verify(accessToken, "sahil");
-    if (!user) {
-      throw new Error("User not found");
+    if (!validToken) {
+      res.send({error: "Inavlid Access"});
     }
-    req.token = token;
-    req.user = user;
-    next();
+    return next();
   } catch (error) {
-      console.log(error.message);
-    res.status(401).send({ error: "Unauthorized user" });
+    console.log(error.message);
+    return res.send({ error: "Unauthorized user" });
   }
 };
+

@@ -15,14 +15,17 @@ import Subject from "./components/subject/subject";
 import Assignment from "./components/Assignment/assignment";
 import Classform from "./components/classform/classform";
 import Addresult from "./components/addresult/addresult";
-import AdminHome from "./components/Home/adminHome";
 import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
+import Edituserdetails from "./components/edituserdetails/edituserdetails";
+// import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
+import { LoginHeader } from "./components/header/loginHeader";
 
 const App = () => {
   const [user, setUser] = useState({});
+  const [isLogin, setLogin] = useState(false);
   useEffect(() => {
     let isAuthnticated = localStorage.getItem("accessToken");
     if (isAuthnticated) {
@@ -39,71 +42,100 @@ const App = () => {
             setUser(res.data.user);
           }
         });
+      
     }
-    
-  },[]);
-
-  if(user){
-    
-  }
-  
+  }, []);
 
   return (
     <div>
-      <Header user={{user}} />
       <Router>
         <Switch>
-          <Route exact path="/admin/register">
-            <AdminReg />
-          </Route>
           <Route path="/accessdenied">
             <Accessdenied />
           </Route>
           <Route exact path="/login">
-            <Login />
+            <Login setuser={setUser} setLogin={setLogin} />
           </Route>
           <Route exact path="/register">
             <Register />
           </Route>
-          <ProtectedRoute exact path="/" component={() => <Home user ={user}/>} />
-          <ProtectedRoute exact path="/admin" component={() => <AdminHome />} />
-          <ProtectedRoute exact
+          <ProtectedRoute
+            exact
+            path="/"
+            component={() => <Home user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/register"
+            component={() => <AdminReg user={user} />}
+          />
+          <ProtectedRoute
+            exact
             path="/admin/subject"
-            component={() => <Mysubject user={user}/>}
+            component={() => <Mysubject user={user} />}
           />
-          <ProtectedRoute exact
+          <ProtectedRoute
+            exact
             path="/userdetails"
-            component={() => <Userdetails user={user}/>}
+            component={() => <Userdetails user={user} />}
           />
-          <ProtectedRoute exact
+          <ProtectedRoute
+            exact
             path="/mysubject/addassignment"
-            component={() => <Addassignment  user={user}/>}
+            component={() => <Addassignment user={user} />}
           />
-          <ProtectedRoute exact path="/noticeform" component={() => <Noticeform user={user}/>} />
-          <ProtectedRoute  exact path="/result" component={() => <Result user={user}/>} />
+
+          <ProtectedRoute
+            path="/edituserdetails"
+            component={() => <Edituserdetails user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/noticeform"
+            component={() => <Noticeform user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/result"
+            component={() => <Result user={user} />}
+          />
           <ProtectedRoute
             exact
             path="/mysubject"
-            component={() => <Mysubject user={user}/>}
+            component={() => <Mysubject user={user} />}
           />
-          <ProtectedRoute exact
+          <ProtectedRoute
+            exact
             path="/mysubject/classform"
-            component={() => <Classform  user={user}/>}
+            component={() => <Classform user={user} />}
           />
-          <ProtectedRoute 
-            path="/mysubject/subject/"
-            component={() => <Subject user={user}/>}
+
+          {/* <ProtectedRoute
+            path="/mysubject/editclass"
+            component={() => <Editclass  user={user}/>}
+          /> */}
+          <ProtectedRoute
+            path="/mysubject/subject/:id"
+            component={() => <Subject user={user} />}
           />
-          <ProtectedRoute exact
-            path="/mysubject/assignment"
+          <ProtectedRoute
+            exact
+            path="/mysubject/assignment/:id/:type"
             component={() => <Assignment user={user} />}
           />
-          <ProtectedRoute exact path="/addresult" component={() => <Addresult  user={user}/>} />
-          <ProtectedRoute exact
-            path="/mysubject/joinclass"
-            component={() => <Joinclass user={user}/>}
+          <ProtectedRoute
+            exact
+            path="/addresult"
+            component={() => <Addresult user={user} />}
           />
-          <Route path="*"><Pagenotfound /></Route>
+          <ProtectedRoute
+            exact
+            path="/mysubject/joinclass"
+            component={() => <Joinclass user={user} />}
+          />
+          <Route path="*">
+            <Pagenotfound />
+          </Route>
         </Switch>
       </Router>
     </div>

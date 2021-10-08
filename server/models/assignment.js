@@ -2,6 +2,10 @@ import Mongoose from "mongoose";
 
 const assignmentSchema = new Mongoose.Schema(
   {
+    type: {
+      type:String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -14,18 +18,23 @@ const assignmentSchema = new Mongoose.Schema(
       ref: "User",
     },
     attchment: {
-      type: File,
+      type: String
     },
     dueDate: {
-        type: Date,
+        type: String,
+        default:"No Due date"
     },
     points:{
         type: Number,
-        default: 100
+        default: 0
     },
     submissions:[{
       type:String
-    }]
+    }],
+    subject:{
+      type: Mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+    }
 
   },
   {

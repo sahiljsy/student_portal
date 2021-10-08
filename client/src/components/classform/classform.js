@@ -6,6 +6,7 @@ import Sidebar from "../sidebar/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Accesssdenied from "../accessdenied/accessdenied";
+import Header from "../header/header";
 
 toast.configure();
 
@@ -15,7 +16,7 @@ class classform extends Component {
 
     this.state = {
       title: "",
-      credit:5,
+      credit: 5,
       userid: this.props.user.id,
     };
   }
@@ -27,11 +28,11 @@ class classform extends Component {
     });
   };
   formatNumber = (e) => {
-    const num = this.state.credit
+    const num = this.state.credit;
     this.setState({
-        credit: parseInt(num)
-    })
-  }
+      credit: parseInt(num),
+    });
+  };
 
   createClass = (e) => {
     e.preventDefault();
@@ -75,51 +76,58 @@ class classform extends Component {
   };
 
   render() {
-    if(this.props.user.role ==="student"){
-      return <Accesssdenied />
+    if (this.props.user.role === "student") {
+      return <Accesssdenied />;
     }
     return (
-      <div className={styles.main_content}>
-        <Sidebar />
+      <>
+        <Header user={this.props.user} />
+        <div className={styles.main_content}>
+          <Sidebar user={this.props.user} />
 
-        <div className={styles.border_box}>
-          <form>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Title: </label>
+          <div className={styles.border_box}>
+            <form>
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Title: </label>
+                </div>
+                <div className={styles.col2}>
+                  <input
+                    type="text"
+                    name="title"
+                    id="classtitle"
+                    placeholder="Title"
+                    onChange={this.handleChange}
+                  />
+                </div>
               </div>
-              <div className={styles.col2}>
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Credits: </label>
+                </div>
+                <div className={styles.col2}>
+                  <input
+                    type="number"
+                    name="credit"
+                    value={this.state.credit}
+                    className={styles.credit}
+                    onChange={this.handleChange}
+                    onBlur={this.formatNumber}
+                  />
+                </div>
+              </div>
+              <div className={styles.row}>
                 <input
-                  type="text"
-                  name="title"
-                  id="classtitle"
-                  placeholder="Title"
-                  onChange={this.handleChange}
+                  type="submit"
+                  value="Submit"
+                  onClick={this.createClass}
                 />
+                <input type="button" value="Cancel" />
               </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Credits: </label>
-              </div>
-              <div className={styles.col2}>
-                <input
-                  type="number"
-                  name="credit"
-                  value={this.state.credit}
-                  className={styles.credit}
-                  onChange={this.handleChange}
-                  onBlur={this.formatNumber}
-                />
-              </div>
-            </div>
-            <div className={styles.row}>
-              <input type="submit" value="Submit" onClick={this.createClass} />
-              <input type="button" value="Cancel" />
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

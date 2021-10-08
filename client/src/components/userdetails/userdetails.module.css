@@ -78,3 +78,11 @@ hr.after_data{
     font-size: 40px;
     text-shadow: 3px 3px rgb(210, 212, 212);
 }
+
+@media screen and (max-width:990px) {
+
+    .main_content{
+        margin:10px;
+        width:100%;
+    }
+  }

@@ -2,22 +2,16 @@ import React, { Component } from "react";
 import styles from "./addresult.module.css";
 import { withRouter } from "react-router-dom";
 import { Sidebar } from "../sidebar/sidebar";
-import Accesssdenied from "../accessdenied/accessdenied";
+import Header from "../header/header";
 
-export class Result extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
+export class Addresult extends Component {
   render() {
-    if (this.props.user.role === "student") {
-      return <Accesssdenied />;
-    }
     return (
+      <>
+      <Header user={this.props.user} />
+      
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={this.props.user}/>
 
         <select name="subject" id="subject">
           <option value="MFP">MFP</option>
@@ -135,8 +129,9 @@ export class Result extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }
 
-export default withRouter(Result);
+export default withRouter(Addresult);

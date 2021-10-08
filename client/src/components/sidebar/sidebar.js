@@ -15,6 +15,16 @@ export class Sidebar extends Component {
        result:"",
     }
   }
+  componentDidMount() {
+    let { user } = this.props;
+    if (user.role === "student") {
+      let admin_sidebar = document.getElementById("admin");
+      admin_sidebar.remove();
+    } else {
+      let student_sidebar = document.getElementById("student");
+      student_sidebar.remove();
+    }
+  }
   
   render() {
     
@@ -55,11 +65,11 @@ export class Sidebar extends Component {
             <hr />
           </ul>
         </nav>
-        <nav className={styles.admin}>
+        <nav id="admin" className={styles.admin}>
           <ul>
             <li>
               <FontAwesomeIcon icon={["fas", "home"]} className={styles.icon} />
-              <a href="/admin">HOME</a>
+              <a href="/">HOME</a>
             </li>
             <hr />
             <li>

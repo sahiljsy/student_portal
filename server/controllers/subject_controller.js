@@ -36,6 +36,31 @@ export const create = async (req, res) => {
   }
 };
 
+export const update = async (req, res) => {
+
+  try {
+    console.log("hii")
+    let clss = await Subject.findOne({ classCode: req.body.classCode });
+    console.log(req.body.classCode)
+    if (clss) {
+      
+      var data = {
+        title: req.body.title,
+        credit: req.body.credit,
+      };
+      const result = await Subject.updateOne({ classCode: req.body.classCode }, { $set: data });
+      console.log(result);
+      return res.send({ success: "Class details updated!!" });
+    } else {
+      return res.send({ error: "Class Not found" })
+    }
+
+  } catch (error) {
+    console.log(error.message);
+    return res.send({ error: "Error in class updation" });
+  }
+};
+
 export const addStudent = async (req, res) => {
   try {
     const { classCode, userid } = req.body;
