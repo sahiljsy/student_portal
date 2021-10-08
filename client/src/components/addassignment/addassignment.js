@@ -3,6 +3,9 @@ import { Component } from "react";
 import { withRouter } from "react-router-dom";
 import queryString from 'query-string';
 import styles from "./addassignment.module.css";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
+import axios from "axios";
 
 class addassignment extends Component {
 
@@ -10,12 +13,13 @@ class addassignment extends Component {
         super(props)
         this.state = {
             type: 'unknown',
-            title: 'This is title',
+            title: '',
             description: '',
             user: this.props.user.id,
             attchment: null,
             dueDate: null,
-            points: 0
+            points: 0,
+            isFile: true
         }
     }
 
@@ -26,7 +30,7 @@ class addassignment extends Component {
 
     handleQueryString = () => {
         let queries = queryString.parse(this.props.location.search)
-        console.log(queries)
+
         this.setState(queries)
     }
 
@@ -35,8 +39,11 @@ class addassignment extends Component {
     }
 
     save(e) {
-
+        e.preventDefault();
+        const { history } = this.props;
+        const { title, user, attchment, type, dueDate } = this.state;
         var fd = new FormData();
+
         fd.append("type", this.state.type);
         fd.append("title", this.state.title);
         fd.append("description", this.state.description);
@@ -44,35 +51,79 @@ class addassignment extends Component {
         fd.append("attchment", this.state.attchment);
         fd.append("dueDate", this.state.dueDate);
         fd.append("points", this.state.points);
+        console.log(dueDate);
+        if (user) {
+            if (title) {
+                
+                if (type == "assignment" && !dueDate) {
+                    toast.error("Please select due date for your assignment.", {
+                        position: "top-center",
+                        theme: "colored",
+                    });
+                }
+                if (type == "material" && attchment == null) {
+                    toast.error("Please select a file to upload.", {
+                        position: "top-center",
+                        theme: "colored",
+                    });
+                }
+                else {
+                    axios("http://localhost:5000/assignment/create", {
+                        method: 'POST',
+                        data: fd,
+                    }).then((res) => {
+                        if (res.data.error) {
 
-        fetch("http://localhost:5000/assignment/create", {
-            method: 'POST',
-            body: fd
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            })
+                            toast.error(res.data.error, {
+                                position: "top-center",
+                                theme: "colored",
+                            });
+                        }
+                        else {
+                            toast.success(res.data.success, {
+                                position: "top-center",
+                                theme: "colored",
+                            });
+                            history.goBack('/mysubject');
+                        }
+                    })
+                }
+
+            } else {
+                toast.error("Title is required", {
+                    position: "top-center",
+                    theme: "colored",
+                });
+            }
+        }
+        else {
+            toast.error("You cannot Post in class", {
+                position: "top-center",
+                theme: "colored",
+            });
+        }
+
     }
 
     handlechange = (e) => {
         // const { name, value } = e.target.title;
         // console.log(e.target.name);
         this.setState({
+
             ...this.state,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         });
     }
 
     render() {
         let type = this.state.type
-        console.log(this.props.user.name)
+
         let displayOnAssignment = () => {
             if (type == 'assignment') {
                 return (
                     <div className={styles.parameters}>
                         <i className="fas fa-calendar-day" id="icon"></i><label>Due date: </label>
-                        <input type="date" name="dueDate" id="dueDate" value={this.state.dueDate} onChange={this.handlechange}/><br /><br />
+                        <input type="date" name="dueDate" id="dueDate" value={this.state.dueDate} onChange={this.handlechange} /><br /><br />
                         <i className="fas fa-award" id="icon"></i><label>Points: </label>
                         <input type="number" name="points" value={this.state.points} onChange={this.handlechange} />
                     </div>
@@ -81,21 +132,21 @@ class addassignment extends Component {
         }
 
         let displaytitle = () => {
-            if(type == 'assignment'){
+            if (type == 'assignment') {
                 return <h1><i className="far fa-file-alt"></i> &nbsp; ASSIGNMENT</h1>
             }
-            else{
-                return  <h1><i className="far fa-file-alt"></i> &nbsp; Material</h1>
+            else {
+                return <h1><i className="far fa-file-alt"></i> &nbsp; Material</h1>
             }
         }
         return (
             <>
-                <form encType="multipart/form-data" action="/mysubject"><br />
-                   {displaytitle()}
+                <form encType="multipart/form-data"><br />
+                    {displaytitle()}
                     <a href="/mysubject"><input type="button" value="Cancel" /></a>
                     <input type="submit" value="Assign" onClick={this.save.bind(this)} /><br />
                     <hr className={styles.hrtag} />
-                    <div classNameName={styles.content}>
+                    <div className={styles.content}>
                         <div className={styles.data}>
 
                             <div className={styles.row}>

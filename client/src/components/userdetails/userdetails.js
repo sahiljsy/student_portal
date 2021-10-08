@@ -22,7 +22,7 @@ class userdetails extends Component {
                         <div className={styles.degree}>B.Tech Computer Engg.</div><br /><br />
                         <div className={styles.display_data}>USERNAME: </div>{user.username} &nbsp; &nbsp;<hr className={styles.after_data} />
                         <div className={styles.display_data}>FULL NAME: </div>{user.name} &nbsp; &nbsp; <hr className={styles.after_data} />
-                        <div className={styles.display_data}>contact: </div> {user.contact_no} &nbsp; &nbsp; <hr className={styles.after_data} />
+                        <div className={styles.display_data}>contact: </div> {user.contact} &nbsp; &nbsp; <hr className={styles.after_data} />
                         <div className={styles.display_data}>email-address: </div> {user.email}&nbsp; &nbsp; <hr className={styles.after_data} />
                         <div className={styles.display_data}>Semester: </div> 05 &nbsp; &nbsp; <hr className={styles.after_data} />
                     </div>
