@@ -31,23 +31,22 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    let user = await User.findOne({ username: req.body.username });
-    console.log(req.body.username)
+    let user = await User.findOne({ email: req.body.email });
+    console.log(req.body.email)
     if (user) {
       console.log(user)
       // console.log(contact_no);
       console.log(req.body.contact_no)
       console.log(req.body.name)
-      console.log(req.body.email)
+      console.log(req.body.username)
       console.log(req.body.role)
       
       var data = {
         name: req.body.name,
-        contact_no: req.body.contact_no,
-        email: req.body.email,
+        contact_no: req.body.contact,
+        username: req.body.username,
       };
-      const result = await User.updateOne({ username : req.body.username },{$set: data} );
-      console.log(result);
+      const result = await User.updateOne({ email : req.body.email },{$set: data} );
       return res.send({ success: "User updated!!" });
     } else {
       return res.send({ error: "User not found" });
@@ -98,6 +97,7 @@ export const info = async (req, res) => {
         role: user.role,
         name: user.name,
         email: user.email,
+        contact: user.contact_no,
       };
       return res.send({ user: userInfo });
 

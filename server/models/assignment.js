@@ -18,7 +18,7 @@ const assignmentSchema = new Mongoose.Schema(
       ref: "User",
     },
     attchment: {
-      type: Buffer,
+      type: String,
       contentType: String,
     },
     dueDate: {
