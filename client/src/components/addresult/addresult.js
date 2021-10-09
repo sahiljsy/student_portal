@@ -5,6 +5,9 @@ import { Sidebar } from "../sidebar/sidebar";
 import Header from "../header/header";
 
 export class Addresult extends Component {
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
   render() {
     return (
       <>

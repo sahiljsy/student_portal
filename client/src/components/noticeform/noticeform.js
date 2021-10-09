@@ -27,6 +27,10 @@ class noticeform extends Component {
       [name]: value,
     });
   };
+
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
   createNotice = (e) => {
     const { history } = this.props;
     const { title, content } = this.state;

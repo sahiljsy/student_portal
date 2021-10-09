@@ -66,6 +66,10 @@ class edituserdetails extends Component {
     }
   };
 
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
+
   render() {
     return (
       <>

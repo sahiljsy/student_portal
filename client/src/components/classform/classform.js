@@ -75,6 +75,10 @@ class classform extends Component {
     }
   };
 
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
+
   render() {
     if (this.props.user.role === "student") {
       return <Accesssdenied />;

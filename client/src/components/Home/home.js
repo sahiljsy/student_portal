@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import styles from "./home.module.css";
 import { Sidebar } from "../sidebar/sidebar";
 import { Notice } from "../notice/notice";
@@ -11,16 +12,16 @@ import Header from '../header/header'
 library.add(fas);
 toast.configure();
 
-export class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       notices: [],
     };
   }
 
   componentDidMount() {
+    document.body.style.backgroundImage = "url('')";
     const { user } = this.props;
     try {
       axios({
@@ -35,7 +36,6 @@ export class Home extends Component {
           });
         } else {
           this.setState({ notices: res.data.notices });
-          // console.log(this.state.notices);
         }
       });
       if(user.role === "student"){
@@ -55,7 +55,6 @@ export class Home extends Component {
   render() {
     const { user } = this.props;
     const notice = this.state.notices;
-    // console.log(user.role);
     return (
       <>
       <Header user={user} /> 
@@ -82,4 +81,4 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

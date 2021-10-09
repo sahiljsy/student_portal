@@ -23,6 +23,7 @@ class addassignment extends Component {
   }
 
   componentDidMount() {
+    document.body.style.backgroundImage = "url('')";
     this.handleQueryString();
   }
 

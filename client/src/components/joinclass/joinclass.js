@@ -26,6 +26,9 @@ class noticeform extends Component {
     });
   };
 
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
   joinClass = (e) => {
     const { history } = this.props;
     e.preventDefault();

@@ -106,3 +106,31 @@ export const addStudent = async (req, res) => {
   }
 };
 
+export const getStudents = async (req, res) =>{
+  try {
+    // console.log(req.body);
+    let subject_id = req.body.subject;
+    let subject = await Subject.findById(subject_id).populate({
+      path:"students"
+    });
+    // console.log(subject);
+    if(subject){
+      var sub = {
+        title :subject.title,
+        classCode :subject.classCode,
+        credit :subject.credit
+      } 
+      return res.send({
+        subject: sub,
+        students: subject.students
+      });
+    }else{
+      return res.send({error:"subject not found"});
+    }
+    
+  } catch (error) {
+    console.log(error.message);
+    return res.send({error:"Unable to find students"})
+  }
+}
+

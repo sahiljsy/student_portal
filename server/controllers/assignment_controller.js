@@ -1,6 +1,7 @@
 import Assignment from "../models/assignment.js";
 import Subject from "../models/subject.js";
 import { transporter } from "../config/nodemailer.js";
+import Submission from "../models/submission.js";
 
 export const create = async (req, res) => {
   let insobj;
@@ -10,7 +11,8 @@ export const create = async (req, res) => {
     if (req.files != null) {
       var fl = req.files.attchment;
       console.log(req.files.attchment);
-      fl.mv("public/assignment/" + fl.name, function (err) {
+      const filename = fl.name;
+      fl.mv("public/assignment/" + filename, function (err) {
         if (err) {
           console.log(err);
         }
@@ -22,7 +24,8 @@ export const create = async (req, res) => {
         user: req.body.user,
         dueDate: req.body.dueDate.toString(),
         points: req.body.points,
-        attchment: fl.name,
+        attchment: filename,
+        mimetype: fl.mimetype,
       };
     } else {
       insobj = {
@@ -145,22 +148,17 @@ export const getAttachment = async (req, res) => {
   }
 };
 
-export const newSubmission = async (req, res) => {
+
+export const downloadFile = async (req, res) => {
   try {
-    if (req.files != null) {
-      var fl = req.files.file;
-      console.log(req.files.file);
-      fl.mv("public/submissions/" + fl.name + "_" + Date.now(), function (err) {
-        if (err) {
-          console.log(err);
-          return res.send({ error: "Fileuploaded failed" });
-        } else {
-          return res.send({ success: "Fileuploaded" });
-        }
-      });
-    }
+    let assignmen = await Assignment.findById(req.params.id);
+    // console.log(assignmen);
+    res.set({
+      "Content-Type": assignmen.mimetype,
+    });
+    return res.sendFile(assignmen.attchment, { root: "public/assignment/" });
   } catch (error) {
     console.log(error.message);
-    return res.send({ error: "Internal server error" });
+    res.status(400).send({error:"Error while downloading file. Try again later."});
   }
 };

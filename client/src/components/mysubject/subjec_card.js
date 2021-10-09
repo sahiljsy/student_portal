@@ -13,7 +13,6 @@ export default class SubjectCard extends Component {
 
   render() {
     const subject = this.state.subject;
-    const url = "/mysubject/subject?uv=" + subject._id;
     return (
       <>
       
