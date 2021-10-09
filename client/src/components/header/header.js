@@ -70,15 +70,11 @@ export class Header extends Component {
               </li>
               <hr />
               <li>
-                <a href="#">FEES</a>
-              </li>
-              <hr />
-              <li>
                 <a href="/mysubject">MY SUBJECTS</a>
               </li>
               <hr />
               <li>
-                <a href="#">CONTACT US</a>
+                <a href="/contactus">CONTACT US</a>
               </li>
               <hr />
               <li>

@@ -1,36 +1,31 @@
 import React, { Component } from "react";
-import styles from "./subject.module.css";
+import styles from "../subject/subject.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import moment from "moment";
 
 library.add(fas);
-export default class AssignmentCard extends Component {
+export default class StudentCard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      assignment: this.props.assignment,
-      creator: this.props.creator,
+      student: this.props.student,
     };
   }
 
   render() {
     // console.log(this.state)
-    const { assignment, creator } = this.state;
+    const { student } = this.state;
     return (
       <div className={styles.card}>
         <FontAwesomeIcon
-          icon={["fas", "file-alt"]}
+          icon={["fas", "user"]}
           className={styles.card_img}
         />
         <p className={styles.card_title}>
-          <a href={`/mysubject/assignment/${assignment._id}/${assignment.type}`}>
-            {creator} Posted New {assignment.type}: {assignment.title}
-          </a>
+          <p>{student.name}</p>
           <br />
-          <span>posted {moment(assignment.createdAt).fromNow()}</span>
         </p>
       </div>
     );

@@ -18,6 +18,7 @@ export default class Mysubject extends Component {
     };
   }
   componentDidMount() {
+    document.body.style.backgroundImage = "url('')";
     try {
       axios({
         method: "post",

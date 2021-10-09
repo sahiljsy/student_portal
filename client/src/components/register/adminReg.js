@@ -31,13 +31,17 @@ class AdminReg extends Component {
     });
   };
 
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
+
   register = () => {
     const { history } = this.props;
     const { name, username, password, repassword, email, contact_no, role } = this.state;
     console.log(this.state);
     if (name && username && password && email && contact_no && password && repassword) {
-      if (password == repassword) {
-        if (role == "user" || role == "admin") {
+      if (password === repassword) {
+        if (role === "user" || role === "admin") {
           axios.post("http://localhost:5000/user/create", this.state)
             .then(res => {
               if (res.data.error) {

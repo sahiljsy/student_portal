@@ -23,6 +23,7 @@ export class Subject extends Component {
   }
 
   componentDidMount() {
+    document.body.style.backgroundImage = "url('')";
     if (this.props.user.role === "student") {
       let class_nav = document.getElementById("class_nav");
       if(class_nav){
@@ -33,9 +34,7 @@ export class Subject extends Component {
         welcome_msg.innerHTML = "New Assignment /material will be display here"
       }
     }
-    // let queries = queryString.parse(this.props.location.search);
     this.setState({ subject_id: this.props.match.params.id });
-    // console.log(this.props);
     try {
       axios({
         method: "POST",
@@ -55,7 +54,7 @@ export class Subject extends Component {
             creator: res.data.creator
           });
 
-          if (res.data.subject.attachments.length != 0) {
+          if (res.data.subject.attachments.length !== 0) {
             console.log(res.data.subject.attachments);
             let x = document.getElementById("welcome_msg");
             if (x) {
@@ -80,6 +79,7 @@ export class Subject extends Component {
           <p className={styles.class_header_title}>{subject.title}</p>
           <p>Class Code: {subject.classCode}</p>
           <p>credit: {subject.credit}</p>
+          <p>Created by: {this.state.creator}</p>
         </div>
         <div id="class_nav" className={styles.class_nav}>
           <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
@@ -98,7 +98,7 @@ export class Subject extends Component {
               </a>
             </li>
             <li>
-              <a href="#">People</a>
+              <a href={`/mysubject/people/${this.state.subject_id}`}>People</a>
             </li>
           </ul>
         </div>

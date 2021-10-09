@@ -8,6 +8,9 @@ import edit from "../../img/edit.png";
 import Header from "../header/header";
 
 class userdetails extends Component {
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
   render() {
     const { user } = this.props;
     console.log(user);
@@ -22,11 +25,11 @@ class userdetails extends Component {
             className={styles.editit}
             style={{ float: "right", margin: "20px 20px 0px 0px" }}
           >
-            <img src={edit} className={styles.edit} style={{ margin: "0px" }} />{" "}
+            <img src={edit} className={styles.edit} style={{ margin: "0px" }} alt=""/>{" "}
             EDIT
           </a>
           <div className={styles.profilephoto}>
-            <img src={stud} className={styles.profpic} />
+            <img src={stud} className={styles.profpic} alt=""/>
           </div>
           <div className={styles.data}>
             <div className={styles.degree}>B.Tech Computer Engg.</div>

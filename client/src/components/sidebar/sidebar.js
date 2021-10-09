@@ -52,7 +52,7 @@ export class Sidebar extends Component {
                 icon={["fas", "id-card"]}
                 className={styles.icon}
               />
-              <a href="#">CONTACT US</a>
+              <a href="/contactus">CONTACT US</a>
             </li>
             <hr />
             <li>

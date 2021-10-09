@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Header from "./components/header/header";
 import Userdetails from "./components/userdetails/userdetails";
 import Addassignment from "./components/addassignment/addassignment";
 import Accessdenied from "./components/accessdenied/accessdenied";
@@ -18,14 +17,13 @@ import Addresult from "./components/addresult/addresult";
 import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
 import Edituserdetails from "./components/edituserdetails/edituserdetails";
+import People from "./components/student/people";
 // import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
-import { LoginHeader } from "./components/header/loginHeader";
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [isLogin, setLogin] = useState(false);
   useEffect(() => {
     let isAuthnticated = localStorage.getItem("accessToken");
     if (isAuthnticated) {
@@ -48,13 +46,14 @@ const App = () => {
 
   return (
     <div>
+
       <Router>
         <Switch>
           <Route path="/accessdenied">
             <Accessdenied />
           </Route>
           <Route exact path="/login">
-            <Login setuser={setUser} setLogin={setLogin} />
+            <Login setuser={setUser} />
           </Route>
           <Route exact path="/register">
             <Register />
@@ -109,11 +108,6 @@ const App = () => {
             path="/mysubject/classform"
             component={() => <Classform user={user} />}
           />
-
-          {/* <ProtectedRoute
-            path="/mysubject/editclass"
-            component={() => <Editclass  user={user}/>}
-          /> */}
           <ProtectedRoute
             path="/mysubject/subject/:id"
             component={() => <Subject user={user} />}
@@ -132,6 +126,11 @@ const App = () => {
             exact
             path="/mysubject/joinclass"
             component={() => <Joinclass user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/mysubject/people/:id"
+            component={() => <People user={user} />}
           />
           <Route path="*">
             <Pagenotfound />
