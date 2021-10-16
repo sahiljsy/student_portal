@@ -15,6 +15,11 @@
   display: flex;
   border-bottom: 2px solid black ;
 }
+.class_welcome{
+  position:fixed;
+  bottom:100px;
+  font-size: xx-large;
+}
 .noListStyle {
   list-style: none;
   font-weight: 700;
@@ -94,8 +99,7 @@
   font-size: large;
   margin: 0px;
   position: absolute;
-  top: 25px;
-  font-weight: bolder;
+  top: 15px;
 }
 .bars {
   display: block;

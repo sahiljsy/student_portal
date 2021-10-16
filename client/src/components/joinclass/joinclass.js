@@ -5,6 +5,7 @@ import styles from "./joinclass.module.css";
 import Sidebar from "../sidebar/sidebar";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Header from "../header/header";
 
 toast.configure();
 class noticeform extends Component {
@@ -32,7 +33,7 @@ class noticeform extends Component {
       if (this.state.userid) {
         if (this.state.classCode) {
           const len = this.state.classCode.length;
-          if (len == 7) {
+          if (len === 7) {
             axios({
               method: "post",
               data: this.state,
@@ -80,8 +81,10 @@ class noticeform extends Component {
 
   render() {
     return (
+      <>
+      <Header user={this.props.user } />
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={this.props.user}/>
 
         <div className={styles.border_box}>
           <form>
@@ -111,6 +114,7 @@ class noticeform extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }

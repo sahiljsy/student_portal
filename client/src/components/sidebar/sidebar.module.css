@@ -30,12 +30,6 @@ nav li a{
     position: relative;
     top: -12px;
 }
-.admin{
-    display: none;
-}
-.student{
-    
-}
 .icon{
     display:inline-block;
     text-align: left;

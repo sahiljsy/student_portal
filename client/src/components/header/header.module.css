@@ -117,9 +117,4 @@ img {
   header {
     width: 100%;
   }
-  .admin {
-    display: none !important;
-  }
-  .student {
-  }
 }

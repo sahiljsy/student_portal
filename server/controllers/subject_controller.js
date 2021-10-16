@@ -1,5 +1,6 @@
 import Subject from "../models/subject.js";
 import RandTokenGenerator from "rand-token";
+import User from "../models/users.js";
 
 export const create = async (req, res) => {
   const code = RandTokenGenerator.generate(7);
@@ -11,10 +12,24 @@ export const create = async (req, res) => {
       creator: req.body.userid,
       classCode: code,
     };
-    // console.log(subject);
     const newSubject = await Subject.create(subject);
-    if (newSubject) return res.send({ success: "Subject created!" });
-    else return res.send({ error: "Error in Subject creation!!" });
+    if (newSubject) {
+      User.findByIdAndUpdate(req.body.userid, {
+        $push: { subjects: newSubject },
+      }).exec((err, message) => {
+        if (err) {
+          console.log(err.message);
+        }
+        if (!message) {
+          console.log("error duded");
+        } else {
+          // console.log("user updated");
+        }
+      });
+      return res.send({ success: "Subject created!" });
+    } else {
+      return res.send({ error: "Error in Subject creation!!" });
+    }
   } catch (error) {
     res.send({ error: "Inernal server error" });
     console.log(error.message);
@@ -49,13 +64,9 @@ export const update = async (req, res) => {
 export const addStudent = async (req, res) => {
   try {
     const { classCode, userid } = req.body;
-    Subject.findOne({ classCode: classCode }, (err, subject) => {
-      if (err) {
-        console.log(err.message);
-      }
+    let subject = await Subject.findOne({ classCode: classCode })
       if (subject) {
         let sub = subject;
-        // console.log(sub.title);
         if (sub.students.includes(userid) || userid == sub.creator) {
           return res.send({ success: "You have joined this class already" });
         } else {
@@ -70,6 +81,18 @@ export const addStudent = async (req, res) => {
             if (!message) {
               return res.send({ error: "YOU CAN NOT JOIN CLASS" });
             } else {
+              User.findByIdAndUpdate(req.body.userid, {
+                $push: { subjects:sub},
+              }).exec((err, message) => {
+                if (err) {
+                  console.log(err.message);
+                }
+                if (!message) {
+                  console.log("error duded");
+                } else {
+                  // console.log("user updated");
+                }
+              });
               return res.send({ success: `You have join class ${sub.title}` });
             }
           });
@@ -77,22 +100,10 @@ export const addStudent = async (req, res) => {
       } else {
         return res.send({ error: "Invalid class code" });
       }
-    });
   } catch (error) {
     console.log(error.message);
     return res.send({ error: "Error in class Joining!!" });
   }
 };
 
-export const getAll = async (req, res) =>{
-  try {
-    //let people = await Subject.find({}).sort('-createdAt').populate("userid");
-    let people = await Subject.find({ classCode: "NA0WPMe" },{students});
-    
-    console.log(people)
-    res.send({people:people});
-    
-  } catch (error) {
-    res.send({error:"Unable to fetch notices"})
-  }
-}
+

@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
-import styles from "./noticeform.module.css";
+import styles from "./updatenoticeform.module.css";
 import Sidebar from "../sidebar/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,13 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Accesssdenied from "../accessdenied/accessdenied";
 import Header from '../header/header'
 
-class noticeform extends Component {
+class updatenoticeform extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      content: "",
+      notice : this.props.location.state,
+      title: this.props.location.state.title,
+      content: this.props.location.state.content,
       attachment: "",
       userid: this.props.user.id,
     };
@@ -27,10 +28,9 @@ class noticeform extends Component {
       [name]: value,
     });
   };
-  createNotice = (e) => {
+  updateNotice = (e) => {
     const { history } = this.props;
     const { title, content } = this.state;
-    
     e.preventDefault();
     console.log(this.state.userid);
     try {
@@ -39,7 +39,7 @@ class noticeform extends Component {
           axios({
             method: "POST",
             data: this.state,
-            url: "/notice/create",
+            url: "/notice/update",
           }).then((res) => {
             if (res.data.error) {
               toast.error(res.data.error, {
@@ -61,7 +61,7 @@ class noticeform extends Component {
           });
         }
       } else {
-        toast.error("You can not create Notice!", {
+        toast.error("You can not update Notice!", {
           position: "top-center",
           theme: "colored",
         });
@@ -75,8 +75,8 @@ class noticeform extends Component {
   };
 
   render() {
-    console.log(this.props)
     const user = this.props.user;
+    console.log(this.props.location.state.title);
     if (user.role === "student") {
       return <Accesssdenied />;
     }
@@ -97,7 +97,7 @@ class noticeform extends Component {
                   name="title"
                   type="text"
                   id="noticetitle"
-                  placeholder="Title"
+                  value= {this.state.title}
                   onChange={this.handleChange}
                 />
               </div>
@@ -110,7 +110,7 @@ class noticeform extends Component {
                 <textarea
                   id="subject"
                   name="content"
-                  placeholder="Specify the details"
+                  value= {this.state.content}
                   onChange={this.handleChange}
                 ></textarea>
               </div>
@@ -128,7 +128,7 @@ class noticeform extends Component {
               </div>
             </div>
             <div className={styles.row}>
-              <input type="submit" value="Submit" onClick={this.createNotice} />
+              <input type="submit" value="Submit" onClick={this.updateNotice} />
               <input type="button" value="Cancel" />
             </div>
           </form>
@@ -139,4 +139,4 @@ class noticeform extends Component {
   }
 }
 
-export default withRouter(noticeform);
+export default withRouter(updatenoticeform);

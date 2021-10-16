@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Sidebar } from "../sidebar/sidebar";
 import styles from "./adminreg.module.css";
-import { Redirect } from "react-router";
 import axios from "axios";
+import Header from "../header/header";
 import { withRouter } from 'react-router-dom';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
@@ -68,7 +68,6 @@ class AdminReg extends Component {
           theme: "colored",
         });
       }
-
     } else {
       toast.error("All fields are required.", {
         position: "top-center",
@@ -78,11 +77,11 @@ class AdminReg extends Component {
   };
 
   render() {
-
-    const { history } = this.props;
     return (
+      <>
+      <Header user={this.props.user}/>
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={this.props.user}/>
         <div className={styles.border_box}>
           <div className={styles.row}>
             <div className={styles.col1}>
@@ -153,6 +152,7 @@ class AdminReg extends Component {
           </div>
         </div>
       </div>
+      </>
     );
   }
 }

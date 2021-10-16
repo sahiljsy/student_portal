@@ -7,22 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(fas);
 
-export class Sidebar extends Component {
+export class AdminSidebar extends Component {
   constructor(props) {
     super(props)
   
     this.state = {
        result:"",
-    }
-  }
-  componentDidMount() {
-    let { user } = this.props;
-    if (user.role === "student") {
-      let admin_sidebar = document.getElementById("admin");
-      admin_sidebar.remove();
-    } else {
-      let student_sidebar = document.getElementById("student");
-      student_sidebar.remove();
     }
   }
   
@@ -65,11 +55,11 @@ export class Sidebar extends Component {
             <hr />
           </ul>
         </nav>
-        <nav id="admin" className={styles.admin}>
+        <nav className={styles.admin}>
           <ul>
             <li>
               <FontAwesomeIcon icon={["fas", "home"]} className={styles.icon} />
-              <a href="/">HOME</a>
+              <a href="/admin">HOME</a>
             </li>
             <hr />
             <li>
@@ -106,4 +96,4 @@ export class Sidebar extends Component {
 }
 
 
-export default withRouter(Sidebar);
+export default withRouter(AdminSidebar);

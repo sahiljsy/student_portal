@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import styles from "./home.module.css";
 import { Sidebar } from "../sidebar/sidebar";
 import { Notice } from "../notice/notice";
-import { Redirect } from "react-router";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
-
+import Header from '../header/header'
 library.add(fas);
 toast.configure();
 
-export class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -22,31 +22,49 @@ export class Home extends Component {
   }
 
   componentDidMount() {
-    axios({
-      method: "get",
-      url: "/notice/getall",
-    }).then((res) => {
-      if (res.data.error) {
-        toast.success(res.data.error, {
-          position: "top-center",
-          theme: "colored",
-        });
-      } else {
-        this.setState({ notices: res.data.notices });
-        // console.log(this.state.notices);
+    const { user } = this.props;
+    console.log(this.props);
+    try {
+      axios({
+        headers:{token:localStorage.getItem("accessToken")},
+        method: "get",
+        url: "/notice/getall",
+      }).then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error, {
+            position: "top-center",
+            theme: "colored",
+          });
+        } else {
+          this.setState({ notices: res.data.notices });
+          // console.log(this.state.notices);
+        }
+      });
+      if(user.role === "student"){
+        let addNotice = document.getElementById("notice_add_card");
+        addNotice.remove();
       }
-    });
+    } catch (error) {
+      toast.error("Invalid Access", {
+        position: "top-center",
+        theme: "colored",
+      });
+    }
+    
+
   }
 
   render() {
     const { user } = this.props;
     const notice = this.state.notices;
-    // console.log(user);
+     console.log(this.props);
     return (
+      <>
+      <Header user={user} /> 
       <div className={styles.main_content}>
-        <Sidebar />
+        <Sidebar user={user}/>
         <div id="notice-container" className={styles.notice_container}>
-          <div className={styles.notice_card}>
+          <div id="notice_add_card" className={styles.notice_card}>
             <div className={`${styles.add_notice} ${styles.text_center}`}>
               <a href="/noticeform">
                 <FontAwesomeIcon
@@ -57,12 +75,13 @@ export class Home extends Component {
             </div>
           </div>
           {notice.map((n) => (
-            <Notice notice={n} key={n._id}/>
+            <Notice notice={n} key={n._id} user= {user}/>
           ))}
         </div>
       </div>
+      </>
     );
   }
 }
 
-export default Home;
+export default withRouter(Home);

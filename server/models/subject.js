@@ -26,6 +26,12 @@ const subjectSchema = new Mongoose.Schema(
         ref: "User",
       },
     ],
+    attachments: [
+      {
+        type: Mongoose.Schema.Types.ObjectId,
+        ref: "Assignment",
+      },
+    ],
   },
   { timestamps: true }
 );

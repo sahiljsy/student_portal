@@ -1,20 +1,19 @@
-import  jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import User from "../models/users.js";
 
-const {verify} = jwt;
+const { verify } = jwt;
 
-export const validateToken = (req, res, next) =>{
-    const accessToken = req.header('accessToken');
-    if(!accessToken){
-        return res.json({error:"Please Login first"});
+export const validateToken = async (req, res, next) => {
+  try {
+    const token = req.header("token");
+    const validToken = verify(token, "sahil");
+    if (!validToken) {
+      res.send({error: "Inavlid Access"});
     }
-    try {
-        const validToken = verify(accessToken, "sahil");
-        if(validToken){
-            return next();
-        }
-        
-    } catch (error) {
-        return res.json({error: error});
-    }
+    return next();
+  } catch (error) {
+    console.log(error.message);
+    return res.send({ error: "Unauthorized user" });
+  }
+};
 
-}

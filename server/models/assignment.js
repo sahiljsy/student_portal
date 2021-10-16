@@ -18,16 +18,23 @@ const assignmentSchema = new Mongoose.Schema(
       ref: "User",
     },
     attchment: {
-      type: String,
-      contentType: String,
+      type: String
     },
     dueDate: {
         type: String,
+        default:"No Due date"
     },
     points:{
         type: Number,
         default: 0
     },
+    submissions:[{
+      type:String
+    }],
+    subject:{
+      type: Mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+    }
 
   },
   {
