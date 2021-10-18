@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
-// import env from './envirnment'
-mongoose.connect(`mongodb://localhost/student_portal`,{ useNewUrlParser: true, useUnifiedTopology: true  });
+import dotenv from 'dotenv';
+dotenv.config();
+
+const CONNECTION_STRING = process.env.CONNECTION_STRING;
+mongoose.connect(CONNECTION_STRING,{ useNewUrlParser: true, useUnifiedTopology: true  });
 
 const db = mongoose.connection;
 

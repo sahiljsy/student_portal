@@ -101,12 +101,6 @@ export const signin = async (req, res) => {
         success: "Logged in Successfully!",
         user: userInfo,
       });
-      // const accessToken = sign(
-      //   { username: user.username, id: user.id },
-      //   "sahil"
-      // );
-
-      // return res.send({ accessToken: accessToken, success: "Logged in Successfully!" });
     });
   } catch (error) {
     console.log(error.message);
@@ -114,20 +108,6 @@ export const signin = async (req, res) => {
   }
 };
 
-// export const info = async (req, res) => {
-//   // console.log(req.user);
-//   const userInfo = {
-//     username: req.user.username,
-//     id: req.user._id,
-//     role: req.user.role,
-//     name: req.user.name,
-//     email: req.user.email,
-//     subject: req.user.subjects,
-//     contact_no: req.user.contact_no
-//   };
-//   console.log(userInfo);
-//   return res.send({ user: userInfo });
-// };
 export const info = async (req, res) => {
   let accessToken = req.header("accessToken");
   try {
