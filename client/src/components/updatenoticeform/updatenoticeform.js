@@ -1,7 +1,7 @@
 import React from "react";
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
-import styles from "./noticeform.module.css";
+import styles from "./updatenoticeform.module.css";
 import Sidebar from "../sidebar/sidebar";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,13 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Accesssdenied from "../accessdenied/accessdenied";
 import Header from '../header/header'
 
-class noticeform extends Component {
+class updatenoticeform extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "",
-      content: "",
+      notice: this.props.location.state,
+      title: this.props.location.state.title,
+      content: this.props.location.state.content,
       attachment: "",
       userid: this.props.user.id,
     };
@@ -27,14 +28,9 @@ class noticeform extends Component {
       [name]: value,
     });
   };
-
-  componentDidMount(){
-    document.body.style.backgroundImage = "url('')";
-  }
-  createNotice = (e) => {
+  updateNotice = (e) => {
     const { history } = this.props;
     const { title, content } = this.state;
-    
     e.preventDefault();
     // console.log(this.state.userid);
     try {
@@ -43,7 +39,7 @@ class noticeform extends Component {
           axios({
             method: "POST",
             data: this.state,
-            url: "/notice/create",
+            url: "/notice/update",
           }).then((res) => {
             if (res.data.error) {
               toast.error(res.data.error, {
@@ -65,7 +61,7 @@ class noticeform extends Component {
           });
         }
       } else {
-        toast.error("You can not create Notice!", {
+        toast.error("You can not update Notice!", {
           position: "top-center",
           theme: "colored",
         });
@@ -79,57 +75,56 @@ class noticeform extends Component {
   };
 
   render() {
-    // console.log(this.props)
     const user = this.props.user;
+    // console.log(this.props.location.state.title);
     if (user.role === "student") {
       return <Accesssdenied />;
     }
     return (
       <>
-      <Header user={this.props.user} />
-      <div className={styles.main_content}>
-        <Sidebar user={user}/>
-        
-        <div className={styles.border_box}>
-        <p style={{fontSize: "40px",marginTop:"15px",fontWeight: "bolder",textAlign:"center"}}><u>ADD NEW NOTICE</u></p>
-          <form>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Notice Title: </label>
+        <Header user={this.props.user} />
+        <div className={styles.main_content}>
+          <Sidebar user={user} />
+
+          <div className={styles.border_box}>
+            <form>
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Notice Title: </label>
+                </div>
+                <div className={styles.col2}>
+                  <input
+                    name="title"
+                    type="text"
+                    id="noticetitle"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                </div>
               </div>
-              <div className={styles.col2}>
-                <input
-                  name="title"
-                  type="text"
-                  id="noticetitle"
-                  placeholder="Title"
-                  onChange={this.handleChange}
-                />
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Notice Information: </label>
+                </div>
+                <div className={styles.col2}>
+                  <textarea
+                    id="subject"
+                    name="content"
+                    value={this.state.content}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
               </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Notice Information: </label>
+              <div className={styles.row}>
+                <input type="submit" value="Update"  onClick={this.updateNotice} />
+                <a href="/"><input type="button" value="Cancel" /></a>
               </div>
-              <div className={styles.col2}>
-                <textarea
-                  id="subject"
-                  name="content"
-                  placeholder="Specify the details"
-                  onChange={this.handleChange}
-                ></textarea>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <input type="submit" value="Submit" onClick={this.createNotice} />
-              <input type="button" value="Cancel" />
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </>
     );
   }
 }
 
-export default withRouter(noticeform);
+export default withRouter(updatenoticeform);

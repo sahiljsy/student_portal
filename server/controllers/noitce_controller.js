@@ -41,7 +41,7 @@ export const create = async (req, res) => {
       return res.send({ error: "Error in Notice creation!!" });
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.send({ error: "Inernal server error" });
   }
 };
@@ -53,5 +53,40 @@ export const getAll = async (req, res) => {
     res.send({ notices: notices });
   } catch (error) {
     res.send({ error: "Unable to fetch notices" });
+  }
+};
+
+export const updatenotice = async (req, res) => {
+  try {
+    let nid = req.body.notice.notice._id;
+    //console.log(nid);
+     let notice = await Notice.findOne({ _id: req.body.notice.notice._id});
+    //  console.log(req.body.title)
+     if (notice) {
+      
+      var data = {
+        title: req.body.title,
+        content: req.body.content,
+      };
+
+      // console.log(data);
+
+      const result = await Notice.updateOne({  _id: req.body.notice.notice._id }, { $set: data });
+      // console.log(result);
+    }
+    res.send({ success: "Notice updated!!"})
+  } catch (error) {
+    res.send({ error: "Unable to update notices" });
+  }
+};
+
+export const deletenotice = async (req, res) => {
+  try {
+    //console.log(req.body.notice._id)
+    let notices = await Notice.deleteOne({_id: req.body.notice._id})
+    // console.log(notices)
+    res.send({ success: "Notice deleted Successfully.!!"});
+  } catch (error) {
+    res.send({ error: "Unable to delete notices" });
   }
 };

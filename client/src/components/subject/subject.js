@@ -18,7 +18,7 @@ export class Subject extends Component {
       subject: {},
       attachments: [],
       user: this.props.user,
-      creator:""
+      creator: ""
     };
   }
 
@@ -26,11 +26,11 @@ export class Subject extends Component {
     document.body.style.backgroundImage = "url('')";
     if (this.props.user.role === "student") {
       let class_nav = document.getElementById("class_nav");
-      if(class_nav){
+      if (class_nav) {
         class_nav.remove();
       }
       let welcome_msg = document.getElementById("welcome_msg");
-      if(welcome_msg){
+      if (welcome_msg) {
         welcome_msg.innerHTML = "New Assignment /material will be display here"
       }
     }
@@ -38,7 +38,7 @@ export class Subject extends Component {
     try {
       axios({
         method: "POST",
-        data: { subject: this.props.match.params.id  },
+        data: { subject: this.props.match.params.id },
         url: "/assignment/getall",
       }).then((res) => {
         if (res.data.error) {
@@ -55,7 +55,7 @@ export class Subject extends Component {
           });
 
           if (res.data.subject.attachments.length !== 0) {
-            console.log(res.data.subject.attachments);
+            // console.log(res.data.subject.attachments);
             let x = document.getElementById("welcome_msg");
             if (x) {
               x.remove();
@@ -71,48 +71,65 @@ export class Subject extends Component {
   render() {
     const subject = this.state.subject;
     const attachments = this.state.attachments;
+
+    let checklength = () => {
+      if (this.state.attachments.length === 0) {
+        return (
+          <div className={styles.card}>
+            <h2 ><center>
+            No Assignment/ Material.
+            </center>  </h2>
+          </div>
+        );
+      }
+    };
+
     return (
       <>
-      <Header user={this.props.user} />
-      <div id="subject-container" className={styles.subject_container}>
-        <div className={styles.class_header}>
-          <p className={styles.class_header_title}>{subject.title}</p>
-          <p>Class Code: {subject.classCode}</p>
-          <p>credit: {subject.credit}</p>
-          <p>Created by: {this.state.creator}</p>
+        <Header user={this.props.user} />
+        <div id="subject-container" className={styles.subject_container}>
+          <div className={styles.class_header}>
+            <p className={styles.class_header_title}>{subject.title}</p>
+            <p>Class Code: {subject.classCode}</p>
+            <p>credit: {subject.credit}</p>
+            <p>Created by: {this.state.creator}</p>
+          </div>
+          <div id="class_nav" className={styles.class_nav}>
+            <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
+              <li>
+                <a
+                  href={`/mysubject/addassignment?type=assignment&usv=${this.state.subject_id}`}
+                >
+                  Add Assignment
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`/mysubject/addassignment?type=material&usv=${this.state.subject_id}`}
+                >
+                  Add Material
+                </a>
+              </li>
+              <li>
+                <a href={`/mysubject/people/${this.state.subject_id}`}>People</a>
+              </li>
+            </ul>
+          </div>
+          {/* <div className={styles.card}>
+            <h2 ><center>
+              No Assignment/ Material.
+            </center>  </h2>
+          </div> */}
+          {checklength()}
+          {attachments.map((a) => (
+            <AssignmentCard
+              assignment={a}
+              creator={this.state.creator}
+              user={this.props.user}
+              key={a._id}
+            />
+          ))}
         </div>
-        <div id="class_nav" className={styles.class_nav}>
-          <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
-            <li>
-              <a
-                href={`/mysubject/addassignment?type=assignment&usv=${this.state.subject_id}`}
-              >
-                Add Assignment
-              </a>
-            </li>
-            <li>
-              <a
-                href={`/mysubject/addassignment?type=material&usv=${this.state.subject_id}`}
-              >
-                Add Material
-              </a>
-            </li>
-            <li>
-              <a href={`/mysubject/people/${this.state.subject_id}`}>People</a>
-            </li>
-          </ul>
-        </div>
-        <div id="welcome_msg" className={styles.class_welcome}>
-          Create new Assignment/ material
-        </div>
-        {attachments.map((a) => (
-          <AssignmentCard
-            assignment={a}
-            creator={this.state.creator}
-            key={a._id}
-          />
-        ))}
-      </div>
       </>
     );
   }

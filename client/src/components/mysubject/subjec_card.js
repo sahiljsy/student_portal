@@ -15,7 +15,6 @@ export default class SubjectCard extends Component {
     const subject = this.state.subject;
     return (
       <>
-      
         <div className={styles.card}>
           <div className={`${styles.card_header} ${styles.text_center}`}>
             <Link to={`/mysubject/subject/${subject._id}`}>

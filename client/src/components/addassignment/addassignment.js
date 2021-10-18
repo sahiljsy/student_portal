@@ -6,9 +6,12 @@ import styles from "./addassignment.module.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Header from "../header/header";
+import AccessDenied from "../accessdenied/accessdenied";
 
 class addassignment extends Component {
-  constructor(props) {
+
+
+constructor(props) {
     super(props);
     this.state = {
       type: "",
@@ -29,7 +32,6 @@ class addassignment extends Component {
 
   handleQueryString = () => {
     let queries = queryString.parse(this.props.location.search);
-    console.log(queries);
     this.setState({ type: queries.type, subject_id: queries.usv });
   };
 
@@ -37,44 +39,74 @@ class addassignment extends Component {
     this.setState({ attchment: ev.target.files[0] });
   }
 
-  save(e) {
-    e.preventDefault();
-    const { history } = this.props;
-    var fd = new FormData();
-    fd.append("type", this.state.type);
-    fd.append("title", this.state.title);
-    fd.append("description", this.state.description);
-    fd.append("user", this.state.user);
-    fd.append("attchment", this.state.attchment);
-    fd.append("dueDate", this.state.dueDate);
-    fd.append("points", this.state.points);
-    fd.append("subject_id", this.state.subject_id);
+    save(e) {
+        e.preventDefault();
+        const { history } = this.props;
+        const { title, user, attchment, type, dueDate } = this.state;
+        var fd = new FormData();
 
-    axios("http://localhost:5000/assignment/create", {
-      method: "POST",
-      data: fd,
-    }).then((res) => {
-      console.log(res.data);
-      if (res.data.error) {
-        toast.error(res.data.error, {
-          position: "top-center",
-          theme: "colored",
-        });
-      } else {
-        console.log(res.data.success);
-        console.log("tost succ");
-        toast.success(res.data.success, {
-          position: "top-center",
-          theme: "colored",
-        });
-        history.goBack();
-      }
-    });
-  }
+        fd.append("type", this.state.type);
+        fd.append("title", this.state.title);
+        fd.append("description", this.state.description);
+        fd.append("user", this.state.user);
+        fd.append("attchment", this.state.attchment);
+        fd.append("dueDate", this.state.dueDate);
+        fd.append("points", this.state.points);
+        fd.append("subject_id", this.state.subject_id);
+        
+        if (user) {
+            if (title) {
+                
+                if (type === "assignment" && !dueDate) {
+                    toast.error("Please select due date for your assignment.", {
+                        position: "top-center",
+                        theme: "colored",
+                    });
+                }
+                if (type === "material" && attchment == null) {
+                    toast.error("Please select a file to upload.", {
+                        position: "top-center",
+                        theme: "colored",
+                    });
+                }
+                else {
+                    axios("http://localhost:5000/assignment/create", {
+                        method: 'POST',
+                        data: fd,
+                    }).then((res) => {
+                        if (res.data.error) {
+
+                            toast.error(res.data.error, {
+                                position: "top-center",
+                                theme: "colored",
+                            });
+                        }
+                        else {
+                            toast.success(res.data.success, {
+                                position: "top-center",
+                                theme: "colored",
+                            });
+                            history.goBack('/mysubject');
+                        }
+                    })
+                }
+
+            } else {
+                toast.error("Title is required", {
+                    position: "top-center",
+                    theme: "colored",
+                });
+            }
+        }
+        else {
+            toast.error("You cannot Post in class", {
+                position: "top-center",
+                theme: "colored",
+            });
+        }
+    }
 
   handlechange = (e) => {
-    // const { name, value } = e.target.title;
-    // console.log(e.target.name);
     this.setState({
       ...this.state,
       [e.target.name]: e.target.value,
@@ -82,8 +114,11 @@ class addassignment extends Component {
   };
 
   render() {
+    if(this.props.user.role === "student"){
+      console.log("in");
+       return <AccessDenied/>
+    }
     let type = this.state.type;
-    // console.log(this.props.user.name)
     let displayOnAssignment = () => {
       if (type === "assignment") {
         return (

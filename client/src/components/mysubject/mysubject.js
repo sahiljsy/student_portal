@@ -14,7 +14,7 @@ export default class Mysubject extends Component {
 
     this.state = {
       redirct: "",
-      subjects:[]
+      subjects: []
     };
   }
   componentDidMount() {
@@ -29,7 +29,7 @@ export default class Mysubject extends Component {
           console.log(res.data.error);
         } else {
           // console.log(res.data.mysubject);
-          this.setState({subjects:res.data.mysubject});
+          this.setState({ subjects: res.data.mysubject });
         }
       });
     } catch (error) {
@@ -45,26 +45,26 @@ export default class Mysubject extends Component {
     const subjects = this.state.subjects
     return (
       <>
-      <Header user={this.props.user} />
-      <div className={styles.main_content}>
-        <Sidebar user={this.props.user}/>
-        <div className={styles.subject_container}>
-          <div className={styles.card}>
-            <div className={`${styles.add_subject} ${styles.text_center}`}>
-              <a href={this.state.redirct}>
-                <FontAwesomeIcon
-                  icon={["fas", "plus"]}
-                  className={styles.add_subject}
-                />
-              </a>
+        <Header user={this.props.user} />
+        <div className={styles.main_content}>
+          <Sidebar user={this.props.user} />
+          <div className={styles.subject_container}>
+            <div className={styles.card}>
+              <div className={`${styles.add_subject} ${styles.text_center}`}>
+                <a href={this.state.redirct}>
+                  <FontAwesomeIcon
+                    icon={["fas", "plus"]}
+                    className={styles.add_subject}
+                  />
+                </a>
+              </div>
             </div>
+            {subjects.map((s) => (
+              <SubjectCard subject={s} key={s._id} />
+            ))}
+
           </div>
-          {subjects.map((s) => (
-            <SubjectCard  subject={s} key={s._id}/>
-          ))}
-          
         </div>
-      </div>
       </>
     );
   }

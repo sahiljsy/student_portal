@@ -28,7 +28,6 @@ class Assignment extends Component {
   handleChange = (e) => {
     this.setState({ progress: 0 });
     const file = e.target.files[0]; // accessing file
-    console.log(file); // storing file
     this.setState({ filename: file });
   };
   handleButtonClick = (e) => {
@@ -49,16 +48,12 @@ class Assignment extends Component {
           responseType: "blob",
         }
       );
-      console.log(result.data);
-      console.log(result.data.type);
-      console.log(this.state.assignment.filename);
       return download(
         result.data,
         this.state.assignment.filename,
         result.data.type
       );
     } catch (error) {
-      console.log(error.message);
       toast.error("Unable to download file", {
         position: "top-center",
         theme: "colored",
@@ -71,6 +66,7 @@ class Assignment extends Component {
     formData.append("file", this.state.filename);
     formData.append("assignment_id", this.state.assignment_id);
     formData.append("userid", this.state.user.id);
+    formData.append("username", this.state.user.username);
     console.log(formData);
     axios
       .post("submission/newSubmission", formData, {
@@ -82,7 +78,6 @@ class Assignment extends Component {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         if (res.data.error) {
           console.log(res.data.error);
         } else {
@@ -99,9 +94,9 @@ class Assignment extends Component {
     alert("unsubmit");
   };
   componentDidMount() {
-    if(localStorage.getItem("role") === "admin"){
+    if (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "faculty") {
       document.getElementById("submission").remove();
-    }else{
+    } else {
       try {
         axios
           .post("submission/checkSubmission", {
@@ -141,10 +136,9 @@ class Assignment extends Component {
           console.log(res.data.error);
         } else {
           this.setState({ assignment: res.data.assignment });
-          // console.log(res.data.assignment);
         }
       });
-    
+
 
     if (this.props.match.params.type === "material") {
       var submission_box = document.getElementById("submission");
@@ -188,7 +182,11 @@ class Assignment extends Component {
                   </div>
                 </div>
               </div>
+              <div style={{marginTop:"15px"}}>
+              {assignment.description}
+              </div>
               <div className={styles.assignment_attachment}>
+              
                 <div className={styles.front_page}></div>
                 <div className={styles.file_title}>
                   <a href="#" onClick={this.downloadFile}>
@@ -223,8 +221,8 @@ class Assignment extends Component {
                     <div className={styles.assignment_attachment} id="submited">
                       <div className={styles.front_page}></div>
                       <div className={styles.file_title}>
-                        <p  id="uploadedfile">
-                          
+                        <p id="uploadedfile">
+
                         </p>
                       </div>
                     </div>

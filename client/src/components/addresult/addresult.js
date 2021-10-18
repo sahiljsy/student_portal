@@ -15,6 +15,7 @@ export class Addresult extends Component {
       
       <div className={styles.main_content}>
         <Sidebar user={this.props.user}/>
+        <p style={{fontSize: "40px",margin:"8px",fontWeight: "bolder"}}>ADD RESULT</p>
 
         <select name="subject" id="subject">
           <option value="MFP">MFP</option>

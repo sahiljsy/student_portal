@@ -10,7 +10,7 @@ export const create = async (req, res) => {
   try {
     if (req.files != null) {
       var fl = req.files.attchment;
-      console.log(req.files.attchment);
+      // console.log(req.files.attchment);
       const filename = fl.name;
       fl.mv("public/assignment/" + filename, function (err) {
         if (err) {
@@ -37,7 +37,7 @@ export const create = async (req, res) => {
         points: req.body.points,
       };
     }
-    console.log(insobj);
+    // console.log(insobj);
     let asign = await Assignment.create(insobj);
     if (asign) {
       Subject.findByIdAndUpdate(req.body.subject_id, {
@@ -87,11 +87,11 @@ export const create = async (req, res) => {
       // console.log("Assignment added.");
       return res.send({ success: "Assignment Added To class" });
     } else {
-      console.log("Error in assignment creation!!");
+      // console.log("Error in assignment creation!!");
       return res.send({ error: "Error in assignment creation!!" });
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.send({ error: "Internal server error." });
   }
 };
@@ -135,6 +135,7 @@ export const getAttachment = async (req, res) => {
       creator: assignment.user.username,
       dueDate: assignment.dueDate,
       points: assignment.points,
+      description : assignment.description,
     };
     if (assignment) {
       return res.send({ assignment: resData });
@@ -142,7 +143,7 @@ export const getAttachment = async (req, res) => {
       return res.send({ error: "unable to find Attachment" });
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
 
     return res.send({ error: "Internal server error" });
   }
@@ -158,7 +159,31 @@ export const downloadFile = async (req, res) => {
     });
     return res.sendFile(assignmen.attchment, { root: "public/assignment/" });
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     res.status(400).send({error:"Error while downloading file. Try again later."});
+  }
+};
+
+export const deleteassignment= async (req, res) => {
+  try {
+    // console.log(req.body.assignment._id)
+    let notices = await Assignment.deleteOne({_id: req.body.assignment._id})
+    let sub = await Submission.deleteMany({assignment_id: req.body.assignment._id})
+    // console.log("Deletes Sub")
+    // console.log(sub)
+    res.send({ success: "Deletion Successfull.!!"});
+  } catch (error) {
+    res.send({ error: "Unable to delete assignment" });
+  }
+};
+
+export const getassignment= async (req, res) => {
+  try {
+    // console.log(req.body)
+    let assignment = await Assignment.findOne({_id: req.body.assignment._id})
+    // console.log(notices)
+    res.send({ assignment});
+  } catch (error) {
+    res.send({ error: "Unable to Find assignment" });
   }
 };

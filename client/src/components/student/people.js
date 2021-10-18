@@ -27,7 +27,7 @@ export class People extends Component {
     document.body.style.backgroundImage = "url('')";
 
     this.setState({ subject_id: this.props.match.params.id });
-    console.log(this.props);
+    // console.log(this.props);
     try {
       axios({
         method: "POST",
@@ -41,14 +41,14 @@ export class People extends Component {
             theme: "colored",
           });
         } else {
-          console.log(res.data);
+          // console.log(res.data);
           this.setState({
             subject: res.data.subject,
             students: res.data.students,
           });
 
           if (res.data.students.length !== 0) {
-            console.log(res.data.subject.attachments);
+            // console.log(res.data.subject.attachments);
             let x = document.getElementById("welcome_msg");
             if (x) {
               x.remove();
@@ -62,9 +62,22 @@ export class People extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const subject = this.state.subject;
     const students = this.state.students;
+
+    let checklength = () => {
+      if (this.state.students.length === 0) {
+        return (
+          <div className={styles.card}>
+            <h2 ><center>
+              No one has joined class!!
+            </center>  </h2>
+          </div>
+        );
+      }
+    };
+
     return (
       <>
         <Header user={this.props.user} />
@@ -75,16 +88,14 @@ export class People extends Component {
             <p>credit: {subject.credit}</p>
           </div>
           <div id="class_nav" className={styles.class_nav}>
-          <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
-            <li>
+            <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
+              <li>
                 Total student: {students.length}
-            </li>
-          </ul>
-        </div>
-          <div id="welcome_msg" className={styles.class_welcome}>
-            No one has joined class!!
+              </li>
+            </ul>
           </div>
-
+          {checklength()}
+          
           {students.map((s) => (
             <StudentCard key={s._id} student={s} />
           ))}

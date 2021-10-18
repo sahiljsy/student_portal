@@ -17,10 +17,16 @@ import Addresult from "./components/addresult/addresult";
 import AdminReg from "./components/register/adminReg";
 import Joinclass from "./components/joinclass/joinclass";
 import Edituserdetails from "./components/edituserdetails/edituserdetails";
-import People from "./components/student/people";
+// import UpdateAssignment from "./components/updateassignment/updateassignment";
 // import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
+import Updatenoticeform from "./components/updatenoticeform/updatenoticeform";
+import People from "./components/student/people";
+import Viewsubmissions from "./components/viewsubmissions/viewsubmissions";
+import Contactus from "./components/contactus/contactus";
+// import Editclass from "./components/editclass/editclass";
+
 
 const App = () => {
   const [user, setUser] = useState({});
@@ -40,7 +46,7 @@ const App = () => {
             setUser(res.data.user);
           }
         });
-      
+
     }
   }, []);
 
@@ -70,8 +76,18 @@ const App = () => {
           />
           <ProtectedRoute
             exact
+            path="/contactus"
+            component={() => <Contactus user={user} />}
+          />
+          <ProtectedRoute
+            exact
             path="/admin/subject"
             component={() => <Mysubject user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/mysubject/viewsubmissions/:id"
+            component={() => <Viewsubmissions user={user} />}
           />
           <ProtectedRoute
             exact
@@ -85,8 +101,10 @@ const App = () => {
           />
 
           <ProtectedRoute
+          exact
             path="/edituserdetails"
-            component={() => <Edituserdetails user={user} />}
+            component={() => <Edituserdetails user={user} setuser={setUser} />}
+
           />
           <ProtectedRoute
             exact
@@ -128,10 +146,16 @@ const App = () => {
             component={() => <Joinclass user={user} />}
           />
           <ProtectedRoute
+            path="/updatenotice"
+            component={() => <Updatenoticeform user={user} />}
+          />
+          <ProtectedRoute
             exact
             path="/mysubject/people/:id"
             component={() => <People user={user} />}
           />
+          
+          
           <Route path="*">
             <Pagenotfound />
           </Route>

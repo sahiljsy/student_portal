@@ -18,7 +18,7 @@ export class Header extends Component {
 
   componentDidMount() {
     const user = this.props.user;
-    if (user.role === "student") {
+    if (user.role === "student" || user.role === "faculty") {
       let admin_sidebar = document.getElementById("admin_dropdown");
       admin_sidebar.remove();
     } else if(user.role === "admin"){
@@ -74,7 +74,7 @@ export class Header extends Component {
               </li>
               <hr />
               <li>
-                <a href="/contactus">CONTACT US</a>
+                <a href="/contactus">ABOUT US</a>
               </li>
               <hr />
               <li>
@@ -98,7 +98,7 @@ export class Header extends Component {
               </li>
               <hr />
               <li>
-                <a href="/admin/register">ADD FACULTY</a>
+                <a href="/admin/register">ADD NEW USER</a>
               </li>
               <hr />
               <li>
@@ -109,6 +109,10 @@ export class Header extends Component {
                 <a href="/noticeform">ADD NOTICE</a>
               </li>
               <hr />
+              <li>
+                <a href="/contactus">ABOUT US</a>
+              </li>
+              <hr/>
               <li>
                 <a href="/" onClick={this.handleLogout}>
                   LOGOUT

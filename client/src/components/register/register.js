@@ -20,7 +20,7 @@ class Register extends Component {
       repassword: "",
       email: "",
       contact_no: "",
-      allSet :true
+      allSet: true
     };
   }
 
@@ -30,7 +30,7 @@ class Register extends Component {
       ...this.state,
       [name]: value,
     });
-    
+
   };
 
   componentDidMount() {
@@ -61,7 +61,7 @@ class Register extends Component {
             theme: "colored",
           });
         } else {
-          toast.success(res.data.error, {
+          toast.success(res.data.success, {
             position: "top-center",
             theme: "colored",
           });
@@ -77,35 +77,35 @@ class Register extends Component {
   };
 
   handleBlur = (e) => {
-    if(e.target.name === "name" && e.target.value === ""){
+    if (e.target.name === "name" && e.target.value === "") {
       document.getElementById("nameerror").innerHTML = "*inavlid name";
-      this.setState({allSet:false});
-    }else{
+      this.setState({ allSet: false });
+    } else {
       document.getElementById("nameerror").innerHTML = "*";
-      this.setState({allSet:true});
+      this.setState({ allSet: true });
     }
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if(e.target.name === "email" && !e.target.value.match(mailformat)){
+    if (e.target.name === "email" && !e.target.value.match(mailformat)) {
       document.getElementById("emailerror").innerHTML = "*inavlid email";
-      this.setState({allSet:false});
+      this.setState({ allSet: false });
     }
-    else{
+    else {
       document.getElementById("emailerror").innerHTML = "*";
-      this.setState({allSet:true});
+      this.setState({ allSet: true });
     }
-    if(e.target.name === "repassword" && (e.target.value !== this.state.password || e.target.value === "")){
+    if (e.target.name === "repassword" && (e.target.value !== this.state.password || e.target.value === "")) {
       document.getElementById("reenterpassworderror").innerHTML = "*Password didn't match";
-      this.setState({allSet:false});
-    }else{
+      this.setState({ allSet: false });
+    } else {
       document.getElementById("reenterpassworderror").innerHTML = "*";
-      this.setState({allSet:true});
+      this.setState({ allSet: true });
     }
-    if(e.target.name === "contact_no" && e.target.value.length  !== 10){
+    if (e.target.name === "contact_no" && e.target.value.length !== 10) {
       document.getElementById("contacterror").innerHTML = "*Invalid contact number"
-      this.setState({allSet:false});
-    }else{
+      this.setState({ allSet: false });
+    } else {
       document.getElementById("contacterror").innerHTML = "*";
-      this.setState({allSet:true});
+      this.setState({ allSet: true });
     }
   }
 
