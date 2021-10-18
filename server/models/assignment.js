@@ -20,6 +20,9 @@ const assignmentSchema = new Mongoose.Schema(
     attchment: {
       type: String
     },
+    mimetype:{
+      type:String
+    },
     dueDate: {
         type: String,
         default:"No Due date"
@@ -29,7 +32,8 @@ const assignmentSchema = new Mongoose.Schema(
         default: 0
     },
     submissions:[{
-      type:String
+      type: Mongoose.Schema.Types.ObjectId,
+      ref: "Submission"
     }],
     subject:{
       type: Mongoose.Schema.Types.ObjectId,

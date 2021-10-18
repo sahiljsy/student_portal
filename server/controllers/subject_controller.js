@@ -32,16 +32,16 @@ export const create = async (req, res) => {
     }
   } catch (error) {
     res.send({ error: "Inernal server error" });
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
 export const update = async (req, res) => {
 
   try {
-    console.log("hii")
+    // console.log("hii")
     let clss = await Subject.findOne({ classCode: req.body.classCode });
-    console.log(req.body.classCode)
+    // console.log(req.body.classCode)
     if (clss) {
       
       var data = {
@@ -49,14 +49,14 @@ export const update = async (req, res) => {
         credit: req.body.credit,
       };
       const result = await Subject.updateOne({ classCode: req.body.classCode }, { $set: data });
-      console.log(result);
+      // console.log(result);
       return res.send({ success: "Class details updated!!" });
     } else {
       return res.send({ error: "Class Not found" })
     }
 
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.send({ error: "Error in class updation" });
   }
 };
@@ -75,7 +75,7 @@ export const addStudent = async (req, res) => {
             { $push: { students: userid } }
           ).exec((err, message) => {
             if (err) {
-              console.log(err.message);
+              // console.log(err.message);
               return res.send({ error: "Error in joing class" });
             }
             if (!message) {
@@ -101,9 +101,37 @@ export const addStudent = async (req, res) => {
         return res.send({ error: "Invalid class code" });
       }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     return res.send({ error: "Error in class Joining!!" });
   }
 };
+
+export const getStudents = async (req, res) =>{
+  try {
+    // console.log(req.body);
+    let subject_id = req.body.subject;
+    let subject = await Subject.findById(subject_id).populate({
+      path:"students"
+    });
+    // console.log(subject);
+    if(subject){
+      var sub = {
+        title :subject.title,
+        classCode :subject.classCode,
+        credit :subject.credit
+      } 
+      return res.send({
+        subject: sub,
+        students: subject.students
+      });
+    }else{
+      return res.send({error:"subject not found"});
+    }
+    
+  } catch (error) {
+    // console.log(error.message);
+    return res.send({error:"Unable to find students"})
+  }
+}
 
 

@@ -13,10 +13,8 @@ export default class SubjectCard extends Component {
 
   render() {
     const subject = this.state.subject;
-    const url = "/mysubject/subject?uv=" + subject._id;
     return (
       <>
-      
         <div className={styles.card}>
           <div className={`${styles.card_header} ${styles.text_center}`}>
             <Link to={`/mysubject/subject/${subject._id}`}>

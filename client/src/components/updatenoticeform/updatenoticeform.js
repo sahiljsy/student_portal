@@ -14,7 +14,7 @@ class updatenoticeform extends Component {
     super(props);
 
     this.state = {
-      notice : this.props.location.state,
+      notice: this.props.location.state,
       title: this.props.location.state.title,
       content: this.props.location.state.content,
       attachment: "",
@@ -32,7 +32,7 @@ class updatenoticeform extends Component {
     const { history } = this.props;
     const { title, content } = this.state;
     e.preventDefault();
-    console.log(this.state.userid);
+    // console.log(this.state.userid);
     try {
       if (this.state.userid) {
         if (title && content) {
@@ -76,64 +76,52 @@ class updatenoticeform extends Component {
 
   render() {
     const user = this.props.user;
-    console.log(this.props.location.state.title);
+    // console.log(this.props.location.state.title);
     if (user.role === "student") {
       return <Accesssdenied />;
     }
     return (
       <>
-      <Header user={this.props.user} />
-      <div className={styles.main_content}>
-        <Sidebar user={user}/>
+        <Header user={this.props.user} />
+        <div className={styles.main_content}>
+          <Sidebar user={user} />
 
-        <div className={styles.border_box}>
-          <form>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Notice Title: </label>
+          <div className={styles.border_box}>
+            <form>
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Notice Title: </label>
+                </div>
+                <div className={styles.col2}>
+                  <input
+                    name="title"
+                    type="text"
+                    id="noticetitle"
+                    value={this.state.title}
+                    onChange={this.handleChange}
+                  />
+                </div>
               </div>
-              <div className={styles.col2}>
-                <input
-                  name="title"
-                  type="text"
-                  id="noticetitle"
-                  value= {this.state.title}
-                  onChange={this.handleChange}
-                />
+              <div className={styles.row}>
+                <div className={styles.col1}>
+                  <label>Notice Information: </label>
+                </div>
+                <div className={styles.col2}>
+                  <textarea
+                    id="subject"
+                    name="content"
+                    value={this.state.content}
+                    onChange={this.handleChange}
+                  ></textarea>
+                </div>
               </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>Notice Information: </label>
+              <div className={styles.row}>
+                <input type="submit" value="Update"  onClick={this.updateNotice} />
+                <a href="/"><input type="button" value="Cancel" /></a>
               </div>
-              <div className={styles.col2}>
-                <textarea
-                  id="subject"
-                  name="content"
-                  value= {this.state.content}
-                  onChange={this.handleChange}
-                ></textarea>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>File to upload:</label>
-              </div>
-              <div className={styles.col2}>
-                <input
-                  type="file"
-                  name="attachment"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>
-            <div className={styles.row}>
-              <input type="submit" value="Submit" onClick={this.updateNotice} />
-              <input type="button" value="Cancel" />
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
       </>
     );
   }

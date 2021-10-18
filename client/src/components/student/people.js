@@ -1,45 +1,38 @@
 import React, { Component } from "react";
-import styles from "./subject.module.css";
+import styles from "../subject/subject.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import AssignmentCard from "./AssignmentCard";
-import Header from '../header/header'
+import Header from "../header/header";
+import StudentCard from "./studentCard";
+
 library.add(fas);
 toast.configure();
-export class Subject extends Component {
+export class People extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       subject_id: "",
-      subject: {},
-      attachments: [],
+      students: [],
       user: this.props.user,
-      creator: ""
+      creator: "",
+      subject: {},
     };
   }
 
   componentDidMount() {
     document.body.style.backgroundImage = "url('')";
-    if (this.props.user.role === "student") {
-      let class_nav = document.getElementById("class_nav");
-      if (class_nav) {
-        class_nav.remove();
-      }
-      let welcome_msg = document.getElementById("welcome_msg");
-      if (welcome_msg) {
-        welcome_msg.innerHTML = "New Assignment /material will be display here"
-      }
-    }
+
     this.setState({ subject_id: this.props.match.params.id });
+    // console.log(this.props);
     try {
       axios({
         method: "POST",
         data: { subject: this.props.match.params.id },
-        url: "/assignment/getall",
+        url: "/subject/getStudent",
       }).then((res) => {
         if (res.data.error) {
           console.log(res.data.error);
@@ -48,13 +41,13 @@ export class Subject extends Component {
             theme: "colored",
           });
         } else {
+          // console.log(res.data);
           this.setState({
-            attachments: res.data.subject.attachments,
             subject: res.data.subject,
-            creator: res.data.creator
+            students: res.data.students,
           });
 
-          if (res.data.subject.attachments.length !== 0) {
+          if (res.data.students.length !== 0) {
             // console.log(res.data.subject.attachments);
             let x = document.getElementById("welcome_msg");
             if (x) {
@@ -69,15 +62,16 @@ export class Subject extends Component {
   }
 
   render() {
+    // console.log(this.state);
     const subject = this.state.subject;
-    const attachments = this.state.attachments;
+    const students = this.state.students;
 
     let checklength = () => {
-      if (this.state.attachments.length === 0) {
+      if (this.state.students.length === 0) {
         return (
           <div className={styles.card}>
             <h2 ><center>
-            No Assignment/ Material.
+              No one has joined class!!
             </center>  </h2>
           </div>
         );
@@ -92,42 +86,18 @@ export class Subject extends Component {
             <p className={styles.class_header_title}>{subject.title}</p>
             <p>Class Code: {subject.classCode}</p>
             <p>credit: {subject.credit}</p>
-            <p>Created by: {this.state.creator}</p>
           </div>
           <div id="class_nav" className={styles.class_nav}>
             <ul className={`${styles.noListStyle} ${styles.horizontalList}`}>
               <li>
-                <a
-                  href={`/mysubject/addassignment?type=assignment&usv=${this.state.subject_id}`}
-                >
-                  Add Assignment
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`/mysubject/addassignment?type=material&usv=${this.state.subject_id}`}
-                >
-                  Add Material
-                </a>
-              </li>
-              <li>
-                <a href={`/mysubject/people/${this.state.subject_id}`}>People</a>
+                Total student: {students.length}
               </li>
             </ul>
           </div>
-          {/* <div className={styles.card}>
-            <h2 ><center>
-              No Assignment/ Material.
-            </center>  </h2>
-          </div> */}
           {checklength()}
-          {attachments.map((a) => (
-            <AssignmentCard
-              assignment={a}
-              creator={this.state.creator}
-              user={this.props.user}
-              key={a._id}
-            />
+          
+          {students.map((s) => (
+            <StudentCard key={s._id} student={s} />
           ))}
         </div>
       </>
@@ -135,4 +105,4 @@ export class Subject extends Component {
   }
 }
 
-export default withRouter(Subject);
+export default withRouter(People);

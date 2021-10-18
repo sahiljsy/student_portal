@@ -17,7 +17,7 @@ export class Sidebar extends Component {
   }
   componentDidMount() {
     let { user } = this.props;
-    if (user.role === "student") {
+    if (user.role === "student" || user.role === "faculty") {
       let admin_sidebar = document.getElementById("admin");
       admin_sidebar.remove();
     } else {
@@ -52,7 +52,7 @@ export class Sidebar extends Component {
                 icon={["fas", "id-card"]}
                 className={styles.icon}
               />
-              <a href="#">CONTACT US</a>
+              <a href="/contactus">ABOUT US</a>
             </li>
             <hr />
             <li>
@@ -88,6 +88,14 @@ export class Sidebar extends Component {
             <li>
               <FontAwesomeIcon icon={["fas", "file"]} className={styles.icon} />
               <a href="/noticeform">ADD NOTICE</a>
+            </li>
+            <hr />
+            <li>
+              <FontAwesomeIcon
+                icon={["fas", "id-card"]}
+                className={styles.icon}
+              />
+              <a href="/contactus">ABOUT US</a>
             </li>
             <hr />
             <li>

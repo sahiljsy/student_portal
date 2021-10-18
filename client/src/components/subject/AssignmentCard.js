@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import styles from "./subject.module.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -22,47 +21,42 @@ class AssignmentCard extends Component {
 
   deleteAssignment = (e) => {
     const { history } = this.props;
-    
+
     axios({
       method: 'DELETE',
       data: this.state,
       url: '/assignment/delete'
-  }).then((res) => {
+    }).then((res) => {
       if (res.data.error) {
-          toast.error(res.data.error, {
-              position: "top-center",
-              theme: "colored",
-          });
+        toast.error(res.data.error, {
+          position: "top-center",
+          theme: "colored",
+        });
       } else {
-          toast.success(res.data.success, {
-              position: "top-center",
-              theme: "colored",
-          });
-          history.goBack()
+        toast.success(res.data.success, {
+          position: "top-center",
+          theme: "colored",
+        });
+        history.goBack()
       }
-  })
+    })
   }
 
   render() {
     // console.log(this.state)
     const { assignment, creator } = this.state;
 
-    console.log(this.props.user.id)
-    console.log(this.state.assignment.user)
+    // console.log(this.props.user.id)
+    // console.log(this.state.assignment._id)
 
     let displayButtons = () => {
-      if (this.state.assignment.user == this.props.user.id) {
+      if (this.state.assignment.user === this.props.user.id) {
         return (
           <>
-          {/* <a href={`/updateassignment?usv=${assignment._id}&type=${assignment.type}`}> */}
-            {/* <a  href={`/mysubject/addassignment?type=assignment&usv=${this.state.subject_id}`}> */}
-            {/* <Link
-              to={{
-                pathname: "/updateassignment?type=" + this.state.assignment.type,
-                state: this.state
-              }}> </Link> */}
-              {/* <input style={{backgroundColor:"lightblue",float:"right",margin:"3%"}} type="button" value="Update" /></a> */}
-            <input type="button" value="Delete" onClick={this.deleteAssignment} style={{float:"right",margin:"3%"}}/>
+            <a href={`/mysubject/viewsubmissions/${this.state.assignment._id}`}>
+              <input type="button" value="View Submissions" style={{ margin: "2%", backgroundColor: "lightblue" }} />
+            </a>
+            <input type="button" value="Delete" onClick={this.deleteAssignment} style={{ float: "right", margin: "2%" }} />
           </>
         );
       }
@@ -79,7 +73,7 @@ class AssignmentCard extends Component {
             {creator} Posted New {assignment.type}: {assignment.title}
           </a>
           <br />
-           <span>posted {moment(assignment.createdAt).fromNow()}</span>
+          <span>posted {moment(assignment.createdAt).fromNow()}</span>
         </p>
         {displayButtons()}
       </div>

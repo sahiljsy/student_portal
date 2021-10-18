@@ -3,15 +3,13 @@ import styles from "./notice.module.css";
 import { Link, withRouter } from "react-router-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import moment from "moment";
 import axios from "axios";
-import  { Redirect } from 'react-router-dom'
 library.add(fas);
 toast.configure();
 
-export class Notice extends Component {
+class Notice extends Component {
   constructor(props) {
     super(props);
 
@@ -20,10 +18,12 @@ export class Notice extends Component {
       title: this.props.notice.title,
       content: this.props.notice.content
     };
+    // console.log(this.props)
   }
 
   deleteNotice = (e) => {
-    const { history } = this.props;
+    // console.log('inside notice')
+    // console.log(this.props.history)
     
     axios({
       method: 'DELETE',
@@ -36,11 +36,13 @@ export class Notice extends Component {
               theme: "colored",
           });
       } else {
+        
           toast.success(res.data.success, {
               position: "top-center",
               theme: "colored",
           });
-          //history.push('/')
+          this.props.changestate()
+        //this.props.history.push("/")
       }
   })
   }
@@ -83,10 +85,10 @@ export class Notice extends Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
 
     let displayButtons = () => {
-      if (notice.userid.email== this.props.user.email) {
+      if (notice.userid.email=== this.props.user.email) {
         return (
           <div style={{marginTop: "50%"}}>
             <Link
@@ -102,7 +104,8 @@ export class Notice extends Component {
     };
 
     const notice = this.props.notice;
-    // console.log(notice);
+    // console.log("In history")
+    //  console.log(this.props);
     return (
       <div className={styles.notice_card}>
         <div className={`${styles.notice_header} ${styles.text_center}`}>
@@ -110,7 +113,7 @@ export class Notice extends Component {
         </div>
         <div className={styles.notice}>
           {notice.content}
-          {displayButtons()}
+          {displayButtons()}<br/>
           <div className={styles.notice_footer}>
             posted {moment(notice.updatedAt).fromNow()} By {notice.userid.name}
           </div>

@@ -27,12 +27,16 @@ class noticeform extends Component {
       [name]: value,
     });
   };
+
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
   createNotice = (e) => {
     const { history } = this.props;
     const { title, content } = this.state;
     
     e.preventDefault();
-    console.log(this.state.userid);
+    // console.log(this.state.userid);
     try {
       if (this.state.userid) {
         if (title && content) {
@@ -75,7 +79,7 @@ class noticeform extends Component {
   };
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const user = this.props.user;
     if (user.role === "student") {
       return <Accesssdenied />;
@@ -85,8 +89,9 @@ class noticeform extends Component {
       <Header user={this.props.user} />
       <div className={styles.main_content}>
         <Sidebar user={user}/>
-
+        
         <div className={styles.border_box}>
+        <p style={{fontSize: "40px",marginTop:"15px",fontWeight: "bolder",textAlign:"center"}}><u>ADD NEW NOTICE</u></p>
           <form>
             <div className={styles.row}>
               <div className={styles.col1}>
@@ -113,18 +118,6 @@ class noticeform extends Component {
                   placeholder="Specify the details"
                   onChange={this.handleChange}
                 ></textarea>
-              </div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.col1}>
-                <label>File to upload:</label>
-              </div>
-              <div className={styles.col2}>
-                <input
-                  type="file"
-                  name="attachment"
-                  onChange={this.handleChange}
-                />
               </div>
             </div>
             <div className={styles.row}>

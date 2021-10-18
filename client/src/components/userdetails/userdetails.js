@@ -8,31 +8,6 @@ import edit from "../../img/edit.png";
 import Header from "../header/header";
 
 class userdetails extends Component {
-    //<<<<<<< HEAD
-    // render() {
-    //     const { user } = this.props
-    // console.log(user)
-
-    // return (
-
-    //     <div className={styles.main_content}>
-    //         <Header user={this.props.user}/>
-    //         <Sidebar  user={user}/>
-    //         <div className={styles.border_box}>
-    //             <a href='/edituserdetails' className={styles.editit} style={{ float: "right", margin: "20px 20px 0px 0px" }}><img src={edit} className={styles.edit} style={{ margin: "0px" }} /> EDIT</a>
-    //             <div className={styles.profilephoto}>
-    //                 <img src={stud} className={styles.profpic} />
-    //             </div>
-    //             <div className={styles.data}>
-    //                 <div className={styles.degree}>B.Tech Computer Engg.</div><br /><br />
-    //                 <div className={styles.display_data}>USERNAME: </div>{user.username} &nbsp; &nbsp;<hr className={styles.after_data} />
-    //                 <div className={styles.display_data}>FULL NAME: </div>{user.name} &nbsp; &nbsp; <hr className={styles.after_data} />
-    //                 <div className={styles.display_data}>contact: </div> {user.contact} &nbsp; &nbsp; <hr className={styles.after_data} />
-    //                 <div className={styles.display_data}>email-address: </div> {user.email}&nbsp; &nbsp; <hr className={styles.after_data} />
-    //             </div>
-    //         </div>
-    //     </div>)
-    // =======
     render() {
         const { user } = this.props;
         console.log(user);
@@ -47,11 +22,11 @@ class userdetails extends Component {
                             className={styles.editit}
                             style={{ float: "right", margin: "20px 20px 0px 0px" }}
                         >
-                            <img src={edit} className={styles.edit} style={{ margin: "0px" }} />{" "}
+                            <img src={edit} alt="TO" className={styles.edit} style={{ margin: "0px" }} />{" "}
                             EDIT
                         </a>
                         <div className={styles.profilephoto}>
-                            <img src={stud} className={styles.profpic} />
+                            <img src={stud} alt="User Profilephoto" className={styles.profpic} />
                         </div>
                         <div className={styles.data}>
                             <div className={styles.degree}>B.Tech Computer Engg.</div>
@@ -72,7 +47,9 @@ class userdetails extends Component {
             </>
         );
     }
-    // >>>>>>> 029bd9c917f7ee9baf096433182bf5bed819e681
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
 
 }
 

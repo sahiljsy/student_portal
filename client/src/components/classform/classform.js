@@ -38,7 +38,6 @@ class classform extends Component {
     e.preventDefault();
     const { history } = this.props;
     const { title, credit } = this.state;
-    // console.log(this.state)
     try {
       if (this.state.userid) {
         if (title && credit) {
@@ -75,6 +74,10 @@ class classform extends Component {
     }
   };
 
+  componentDidMount(){
+    document.body.style.backgroundImage = "url('')";
+  }
+
   render() {
     if (this.props.user.role === "student") {
       return <Accesssdenied />;
@@ -86,6 +89,7 @@ class classform extends Component {
           <Sidebar user={this.props.user} />
 
           <div className={styles.border_box}>
+          <p style={{fontSize: "40px",marginTop:"15px",fontWeight: "bolder",textAlign:"center"}}><u>CREATE NEW CLASS</u></p>
             <form>
               <div className={styles.row}>
                 <div className={styles.col1}>

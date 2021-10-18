@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Header from "./components/header/header";
 import Userdetails from "./components/userdetails/userdetails";
 import Addassignment from "./components/addassignment/addassignment";
 import Accessdenied from "./components/accessdenied/accessdenied";
@@ -22,12 +21,15 @@ import Edituserdetails from "./components/edituserdetails/edituserdetails";
 // import Editclass from "./components/editclass/editclass";
 import axios from "axios";
 import ProtectedRoute from "./components/protectedRoute/protectedRoute";
-import { LoginHeader } from "./components/header/loginHeader";
 import Updatenoticeform from "./components/updatenoticeform/updatenoticeform";
+import People from "./components/student/people";
+import Viewsubmissions from "./components/viewsubmissions/viewsubmissions";
+import Contactus from "./components/contactus/contactus";
+// import Editclass from "./components/editclass/editclass";
+
 
 const App = () => {
   const [user, setUser] = useState({});
-  const [isLogin, setLogin] = useState(false);
   useEffect(() => {
     let isAuthnticated = localStorage.getItem("accessToken");
     if (isAuthnticated) {
@@ -44,19 +46,20 @@ const App = () => {
             setUser(res.data.user);
           }
         });
-      
+
     }
   }, []);
 
   return (
     <div>
+
       <Router>
         <Switch>
           <Route path="/accessdenied">
             <Accessdenied />
           </Route>
           <Route exact path="/login">
-            <Login setuser={setUser} setLogin={setLogin} />
+            <Login setuser={setUser} />
           </Route>
           <Route exact path="/register">
             <Register />
@@ -73,8 +76,18 @@ const App = () => {
           />
           <ProtectedRoute
             exact
+            path="/contactus"
+            component={() => <Contactus user={user} />}
+          />
+          <ProtectedRoute
+            exact
             path="/admin/subject"
             component={() => <Mysubject user={user} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/mysubject/viewsubmissions/:id"
+            component={() => <Viewsubmissions user={user} />}
           />
           <ProtectedRoute
             exact
@@ -86,19 +99,12 @@ const App = () => {
             path="/mysubject/addassignment"
             component={() => <Addassignment user={user} />}
           />
-          {/* <ProtectedRoute
-            exact
-            path="/updateassignment/"
-            component={() => <UpdateAssignment user={user}/>}
-          /> */}
 
           <ProtectedRoute
+          exact
             path="/edituserdetails"
-//<<<<<<< HEAD
-            component={() => <Edituserdetails user={user} setuser={setUser}/>}
-// =======
-//             component={() => <Edituserdetails user={user} />}
-// >>>>>>> 029bd9c917f7ee9baf096433182bf5bed819e681
+            component={() => <Edituserdetails user={user} setuser={setUser} />}
+
           />
           <ProtectedRoute
             exact
@@ -120,11 +126,6 @@ const App = () => {
             path="/mysubject/classform"
             component={() => <Classform user={user} />}
           />
-
-          {/* <ProtectedRoute
-            path="/mysubject/editclass"
-            component={() => <Editclass  user={user}/>}
-          /> */}
           <ProtectedRoute
             path="/mysubject/subject/:id"
             component={() => <Subject user={user} />}
@@ -146,11 +147,18 @@ const App = () => {
           />
           <ProtectedRoute
             path="/updatenotice"
-            component={() => <Updatenoticeform user={user}/>}
+            component={() => <Updatenoticeform user={user} />}
           />
-          <Route path="*"><Pagenotfound /></Route>
-
-
+          <ProtectedRoute
+            exact
+            path="/mysubject/people/:id"
+            component={() => <People user={user} />}
+          />
+          
+          
+          <Route path="*">
+            <Pagenotfound />
+          </Route>
         </Switch>
       </Router>
     </div>
