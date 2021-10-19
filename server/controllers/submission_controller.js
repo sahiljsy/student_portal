@@ -70,6 +70,7 @@ export const getallsubmission = async (req, res ) => {
       // console.log(req.body);
       //  console.log(sub);
       if(sub){
+        
           return res.send({submissions:sub});
       }else{
           return res.send({error:"not submited"});

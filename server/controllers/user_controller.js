@@ -2,7 +2,9 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { transporter } from "../config/nodemailer.js";
-import { request } from "express";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { verify } = jwt;
 
@@ -22,7 +24,7 @@ export const create = async (req, res) => {
         });
         transporter.sendMail(
           {
-            from: " Student Portal dummydevlop@gmail.com",
+            from: " Student Portal "+process.env.EMAIL_USER,
             to: email,
             subject: "New Registration",
             html:`<h4> Welcom to Student Poratl</h4>`,
@@ -119,7 +121,7 @@ export const signin = async (req, res) => {
 export const info = async (req, res) => {
   let accessToken = req.header("accessToken");
   try {
-    const validToken = verify(accessToken, "sahil");
+    const validToken = verify(accessToken, process.env.KEY);
     if (validToken) {
       const user = await User.findById(validToken._id);
       if (!user) {
