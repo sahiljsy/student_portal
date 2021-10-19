@@ -1,12 +1,14 @@
 import jwt from "jsonwebtoken";
-import User from "../models/users.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const { verify } = jwt;
 
 export const validateToken = async (req, res, next) => {
   try {
     const token = req.header("token");
-    const validToken = verify(token, "sahil");
+    const validToken = verify(token, process.env.KEY);
     if (!validToken) {
       res.send({error: "Inavlid Access"});
     }

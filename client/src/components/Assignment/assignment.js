@@ -86,6 +86,8 @@ class Assignment extends Component {
           done_btn.innerHTML = "Unsubmit";
           status.innerHTML = "Submited";
           done_btn.disable = true;
+          document.getElementById("submited").style.display = "inlineblock";
+          document.getElementById("uploadedfile").innerHTML = res.data.name;
         }
       });
   };
@@ -94,7 +96,10 @@ class Assignment extends Component {
     alert("unsubmit");
   };
   componentDidMount() {
-    if (localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "faculty") {
+    if (
+      localStorage.getItem("role") === "admin" ||
+      localStorage.getItem("role") === "faculty"
+    ) {
       document.getElementById("submission").remove();
     } else {
       try {
@@ -111,11 +116,13 @@ class Assignment extends Component {
               done_btn.innerHTML = "Unsubmit";
               status.innerHTML = "Submited";
               done_btn.disable = true;
+              document.getElementById("submited").style.display = "inlineblock";
               document.getElementById("uploadedfile").innerHTML = res.data.name;
-              document.getElementById("submited").style.display = 'inlineblock';
             } else {
-              let submitedfile_box = document.getElementById("submited");
-              submitedfile_box.style.display = 'none';
+              if (this.props.match.params.type === "assignment") {
+                let submitedfile_box = document.getElementById("submited");
+                submitedfile_box.remove();
+              }
             }
           });
       } catch (error) {
@@ -135,10 +142,12 @@ class Assignment extends Component {
         if (res.data.error) {
           console.log(res.data.error);
         } else {
+          if (res.data.assignment.filename === undefined) {
+            document.getElementById("attachment").remove();
+          }
           this.setState({ assignment: res.data.assignment });
         }
       });
-
 
     if (this.props.match.params.type === "material") {
       var submission_box = document.getElementById("submission");
@@ -182,11 +191,8 @@ class Assignment extends Component {
                   </div>
                 </div>
               </div>
-              <div style={{marginTop:"15px"}}>
-              {assignment.description}
-              </div>
-              <div className={styles.assignment_attachment}>
-              
+              <div style={{ marginTop: "15px" }}>{assignment.description}</div>
+              <div className={styles.assignment_attachment} id="attachment">
                 <div className={styles.front_page}></div>
                 <div className={styles.file_title}>
                   <a href="#" onClick={this.downloadFile}>
@@ -221,9 +227,7 @@ class Assignment extends Component {
                     <div className={styles.assignment_attachment} id="submited">
                       <div className={styles.front_page}></div>
                       <div className={styles.file_title}>
-                        <p id="uploadedfile">
-
-                        </p>
+                        <p id="uploadedfile"></p>
                       </div>
                     </div>
                     <button

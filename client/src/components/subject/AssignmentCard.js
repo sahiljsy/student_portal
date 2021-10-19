@@ -23,9 +23,9 @@ class AssignmentCard extends Component {
     const { history } = this.props;
 
     axios({
-      method: 'DELETE',
+      method: "DELETE",
       data: this.state,
-      url: '/assignment/delete'
+      url: "/assignment/delete",
     }).then((res) => {
       if (res.data.error) {
         toast.error(res.data.error, {
@@ -37,10 +37,10 @@ class AssignmentCard extends Component {
           position: "top-center",
           theme: "colored",
         });
-        history.goBack()
+        history.goBack();
       }
-    })
-  }
+    });
+  };
 
   render() {
     // console.log(this.state)
@@ -54,9 +54,18 @@ class AssignmentCard extends Component {
         return (
           <>
             <a href={`/mysubject/viewsubmissions/${this.state.assignment._id}`}>
-              <input type="button" value="View Submissions" style={{ margin: "2%", backgroundColor: "lightblue" }} />
+              <input
+                type="button"
+                value="View Submissions"
+                style={{ margin: "2%", backgroundColor: "lightblue" }}
+              />
             </a>
-            <input type="button" value="Delete" onClick={this.deleteAssignment} style={{ float: "right", margin: "2%" }} />
+            <input
+              type="button"
+              value="Delete"
+              onClick={this.deleteAssignment}
+              style={{ float: "right", margin: "2%" }}
+            />
           </>
         );
       }
@@ -69,7 +78,9 @@ class AssignmentCard extends Component {
           className={styles.card_img}
         />
         <p className={styles.card_title}>
-          <a href={`/mysubject/assignment/${assignment._id}/${assignment.type}`}>
+          <a
+            href={`/mysubject/assignment/${assignment._id}/${assignment.type}`}
+          >
             {creator} Posted New {assignment.type}: {assignment.title}
           </a>
           <br />

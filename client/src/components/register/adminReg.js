@@ -52,7 +52,7 @@ class AdminReg extends Component {
                   theme: "colored",
                 });
               } else {
-                toast.success(res.data.success, {
+                toast.success("new user has registered", {
                   position: "top-center",
                   theme: "colored",
                 });

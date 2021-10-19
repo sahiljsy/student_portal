@@ -3,12 +3,16 @@ import styles from "./addresult.module.css";
 import { withRouter } from "react-router-dom";
 import { Sidebar } from "../sidebar/sidebar";
 import Header from "../header/header";
+import Accesssdenied from "../accessdenied/accessdenied";
 
 export class Addresult extends Component {
   componentDidMount(){
     document.body.style.backgroundImage = "url('')";
   }
   render() {
+    if(localStorage.getItem("role") === "student"){
+      return <Accesssdenied />
+    }
     return (
       <>
       <Header user={this.props.user} />

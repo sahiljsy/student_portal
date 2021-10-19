@@ -21,9 +21,6 @@ class Viewsubmissions extends Component {
       assignment_id: "",
       user: this.props.user,
       submissions: [],
-
-      //   user_id: "",
-      //   filename: ""
     };
 
     try {
@@ -95,7 +92,6 @@ class Viewsubmissions extends Component {
 
   render() {
     var submissions = this.state.submissions;
-
     let checklength = () => {
       if (this.state.submissions.length === 0) {
         return (
